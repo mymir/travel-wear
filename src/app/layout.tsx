@@ -29,8 +29,7 @@ export default function RootLayout({
         <ThemeRegistry>
           <Box>
             <Banner />
-            <Navbar />
-            <Toolbar />
+            <Navbar />            
             {children}            
             <Toolbar />
             <Toolbar />

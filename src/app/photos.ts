@@ -1,3 +1,26 @@
+// interface PhotoItem {
+//     id: number;
+//     url: string;
+// }
+
+// export const displayItems: PhotoItem[] = [
+//     {
+//         id: 0,
+//         url: 'https://images.unsplash.com/photo-1584720223124-466ff369e7c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80'
+//     },
+//     {
+//         id: 1,
+//         url: 'https://images.unsplash.com/photo-1586102901518-ca0f178acb5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80'
+//     },
+//     {
+//         id: 2,
+//         url: 'https://images.unsplash.com/photo-1590330297626-d7aff25a0431?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2048&q=80'
+//     },
+//     {
+//         id: 3,
+//         url: 'https://images.unsplash.com/photo-1631902112544-2271267abb73?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80'
+//     },
+// ]
 interface PhotoItem {
     id: number;
     name: string;

@@ -1,6 +1,9 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -14,6 +17,12 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import CircularProgress from '@mui/material/CircularProgress';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import ApparelDialog from './ApparelDialog'
 
 interface PhotoItem {
     id: number;
@@ -28,6 +37,22 @@ interface PhotoItem {
 }
 
 export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
+    const [open, setOpen] = useState(false);
+    const [currentItem, setCurrentItem] = useState<PhotoItem>();
+
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  
+    const handleClickOpen = (item: PhotoItem) => {
+      setOpen(true);
+      setCurrentItem(item);
+      console.log(fullScreen);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     const ref = useRef<null | HTMLDivElement>(null); 
 
     const [isLoading, setIsLoading] = useState(false);
@@ -84,17 +109,32 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
     
     return (
         <Grid container item spacing={2} xs={12} sm={12} md={10}>
+            <Dialog                
+                open={open}
+                onClose={handleClose}
+                fullScreen={fullScreen}
+                scroll='paper'
+                aria-labelledby="scroll-dialog-title"
+                aria-describedby="scroll-dialog-description"        
+            >
+                <DialogTitle id="scroll-dialog-title" sx={{ width: '100%', display: 'flex', justifyContent: 'end', p: 1 }}>
+                    <IconButton onClick={handleClose}>
+                        <CloseOutlinedIcon />
+                    </IconButton>
+                </DialogTitle>
+                <ApparelDialog item={currentItem}/>
+            </Dialog>
             <div ref={ref}/>
             {currentPosts.map((item) => 
                 <Grid item xs={12} sm={6} md={3} key={item.id}>
                     {item.featured 
                     ?
                         <Box 
+                            onClick={(e) => handleClickOpen(item)}
                             sx={{ 
                                 bgcolor: 'background.paper', 
                                 height: '50vh', 
-                                borderRadius: '80px 10px', 
-                                // border: '2px solid background.paper',
+                                borderRadius: '80px 10px',
                                 backgroundPosition: "center",
                                 backgroundSize: "cover",
                                 backgroundRepeat: "no-repeat",
@@ -108,7 +148,7 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
                                 }
                             }}
                         >
-                                <Box className="interaction" sx={{ mx: 5, bgcolor: 'rgba(255,255,255,0.7)', borderRadius: '10px', position: 'relative', top: '85%', display: 'none', alignItems: 'end', justifyContent: 'center' }}>
+                            <Box className="interaction" sx={{ mx: 5, bgcolor: 'rgba(255,255,255,0.7)', borderRadius: '10px', position: 'relative', top: '85%', display: 'none', alignItems: 'end', justifyContent: 'center' }}>
                                 <IconButton disableRipple sx={{ mr: 2, ':hover': { color: 'black' } }}>
                                     <FavoriteBorderRoundedIcon sx={{ position: 'absolute', opacity: 1, ':hover': { opacity: 0 } }} />
                                     <FavoriteRoundedIcon sx={{ color: 'primary.main', position: 'relative', opacity: 0, ':hover': { opacity: 1 } }} />
@@ -119,12 +159,12 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
                             </Box>
                         </Box>
                     :
-                        <Box 
+                        <Box
+                            onClick={(e) => handleClickOpen(item)}
                             sx={{ 
                                 bgcolor: 'background.paper', 
                                 height: '50vh', 
-                                borderRadius: '10px 10px 10px 10px', 
-                                // border: '2px solid background.paper',
+                                borderRadius: '10px 10px 10px 10px',
                                 backgroundPosition: "center",
                                 backgroundSize: "cover",
                                 backgroundRepeat: "no-repeat",
@@ -149,34 +189,6 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
                             </Box>
                         </Box>
                     }
-                    {/* <Box 
-                        sx={{ 
-                            bgcolor: 'background.paper', 
-                            height: '50vh', 
-                            borderRadius: '80px 20px 20px 20px', 
-                            // border: '2px solid background.paper',
-                            backgroundPosition: "center",
-                            backgroundSize: "cover",
-                            backgroundRepeat: "no-repeat",
-                            backgroundImage: `url(${item.primaryUrl})`,
-                            ':hover': {
-                                cursor: 'pointer',
-                                backgroundImage: `url(${item.secondaryUrl})`,
-                            },
-                            ':hover .interaction': {
-                                display: 'flex'
-                            }
-                        }}
-                    >
-                        <Box className="interaction" sx={{ mx: 5, bgcolor: 'rgba(255,255,255,0.7)', borderRadius: '10px', position: 'relative', top: '85%', display: 'none', alignItems: 'end', justifyContent: 'center' }}>
-                            <IconButton disableRipple sx={{ mr: 2, ':hover': { color: 'black' } }}>
-                                <FavoriteBorderRoundedIcon />
-                            </IconButton>
-                            <IconButton disableRipple sx={{ ':hover': { color: 'black' } }}>
-                                <ShoppingCartOutlinedIcon />
-                            </IconButton>
-                        </Box>
-                    </Box> */}
                     <Box sx={{ textAlign: 'center', mt: 1, p: 1, bgcolor: 'background.paper', borderRadius: '0 0 10px 10px' }}>
                         <Typography variant='body1' sx={{ color: 'black' }} >{item.name}</Typography>
                         {item.onSale
@@ -191,8 +203,8 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
                         </Box>
                         : <Typography variant='body2' sx={{ color: 'black' }} >${item.price}</Typography>
                         }
-                        {item.colors.map((color) =>        
-                            <IconButton disableRipple sx={{ borderRadius: 5, border: 'grey 2px solid', p: 0, mr: 0.5, ':hover': { border: 'black 2px solid' } }}>
+                        {item.colors.map((color, index) =>        
+                            <IconButton key={index} disableRipple sx={{ borderRadius: 5, border: 'grey 2px solid', p: 0, mr: 0.5, ':hover': { border: 'black 2px solid' } }}>
                                 <CircleIcon sx={{ color: {color}, fontSize: '15px' }} />
                             </IconButton>  
                         )}
