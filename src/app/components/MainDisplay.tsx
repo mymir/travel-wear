@@ -80,6 +80,10 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
         // ref.current?.scrollIntoView({ behavior: 'smooth', block: "center" });
     };
 
+    const itemRoute = (name: string) => {
+        return name.toLowerCase().replaceAll(' ', '-');
+    }
+
     const handleScroll = () => {
         if (window.innerHeight + document.documentElement.scrollTop < (document.documentElement.offsetHeight - 350) || isLoading || postsPerPage >= apparel.length) {
             if(postsPerPage >= apparel.length) {
@@ -113,9 +117,10 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
                 open={open}
                 onClose={handleClose}
                 fullScreen={fullScreen}
-                scroll='paper'
+                fullWidth={true}
                 aria-labelledby="scroll-dialog-title"
-                aria-describedby="scroll-dialog-description"        
+                aria-describedby="scroll-dialog-description"  
+                sx={{ maxwidth: '800px' }}    
             >
                 <DialogTitle id="scroll-dialog-title" sx={{ width: '100%', display: 'flex', justifyContent: 'end', p: 1 }}>
                     <IconButton onClick={handleClose}>
@@ -129,41 +134,69 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
                 <Grid item xs={12} sm={6} md={3} key={item.id}>
                     {item.featured 
                     ?
-                        <Box 
-                            onClick={(e) => handleClickOpen(item)}
+                    <Box
+                        sx={{ 
+                            position: 'relative',
+                            width: '100%',
+                            height: '50vh', 
+                            p: 0,
+                            m: 0,
+                            bgcolor: 'background.paper', 
+                            borderRadius: '10px 10px 10px 10px',
+                            backgroundPosition: "center",
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat",
+                            backgroundImage: `url(${item.primaryUrl})`,
+                            ':hover': {
+                                cursor: 'pointer',
+                                backgroundImage: `url(${item.secondaryUrl})`,
+                            },
+                            ':hover .interaction': {
+                                display: 'flex'
+                            }
+                        }}
+                    >
+                        <Button
+                            component='a'
+                            href={`/product/${itemRoute(item.name)}`}
+                            disableRipple
                             sx={{ 
-                                bgcolor: 'background.paper', 
-                                height: '50vh', 
-                                borderRadius: '80px 10px',
-                                backgroundPosition: "center",
-                                backgroundSize: "cover",
-                                backgroundRepeat: "no-repeat",
-                                backgroundImage: `url(${item.primaryUrl})`,
+                                position: 'absolute',
+                                height: 'inherit',
+                                right: 0,
+                                left: 0,
+                                p: 0,
+                                m: 0,
+                                zIndex: 1,
+                                bgcolor: 'transparent', 
                                 ':hover': {
-                                    cursor: 'pointer',
-                                    backgroundImage: `url(${item.secondaryUrl})`,
-                                },
-                                ':hover .interaction': {
-                                    display: 'flex'
+                                    bgcolor: 'transparent', 
                                 }
                             }}
-                        >
-                            <Box className="interaction" sx={{ mx: 5, bgcolor: 'rgba(255,255,255,0.7)', borderRadius: '10px', position: 'relative', top: '85%', display: 'none', alignItems: 'end', justifyContent: 'center' }}>
-                                <IconButton disableRipple sx={{ mr: 2, ':hover': { color: 'black' } }}>
+                        />
+                        <Box className="interaction" sx={{ display: 'none', height: '100%', width: '100%', flexDirection: 'column'}}>
+                            <Box sx={{ position: 'relative', display: 'flex', alignItems: 'end', justifyContent: 'end' }}>
+                                <IconButton disableRipple sx={{ zIndex: 2, m: 1, bgcolor: 'rgba(255,255,255,0.7)' }}>
                                     <FavoriteBorderRoundedIcon sx={{ position: 'absolute', opacity: 1, ':hover': { opacity: 0 } }} />
                                     <FavoriteRoundedIcon sx={{ color: 'primary.main', position: 'relative', opacity: 0, ':hover': { opacity: 1 } }} />
                                 </IconButton>
-                                <IconButton disableRipple sx={{ ':hover': { color: 'black' } }}>
-                                    <ShoppingCartOutlinedIcon />
-                                </IconButton>
+                            </Box>
+                            <Box sx={{ position: 'relative', display: 'flex', flexGrow: 1, alignItems: 'flex-end', justifyContent: 'center', pb: 2 }}>
+                                <Button onClick={(e) => handleClickOpen(item)} size='large' variant='contained' sx={{ zIndex: 2, px: 2, fontWeight: 'bold', borderRadius: '10px' }}>
+                                    Quick Preview
+                                </Button>
                             </Box>
                         </Box>
+                    </Box>
                     :
                         <Box
-                            onClick={(e) => handleClickOpen(item)}
                             sx={{ 
-                                bgcolor: 'background.paper', 
+                                position: 'relative',
+                                width: '100%',
                                 height: '50vh', 
+                                p: 0,
+                                m: 0,
+                                bgcolor: 'background.paper', 
                                 borderRadius: '10px 10px 10px 10px',
                                 backgroundPosition: "center",
                                 backgroundSize: "cover",
@@ -178,14 +211,36 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
                                 }
                             }}
                         >
-                            <Box className="interaction" sx={{ mx: 5, bgcolor: 'rgba(255,255,255,0.7)', borderRadius: '10px', position: 'relative', top: '85%', display: 'none', alignItems: 'end', justifyContent: 'center' }}>
-                                <IconButton disableRipple sx={{ mr: 2, ':hover': { color: 'black' } }}>
-                                    <FavoriteBorderRoundedIcon sx={{ position: 'absolute', opacity: 1, ':hover': { opacity: 0 } }} />
-                                    <FavoriteRoundedIcon sx={{ color: 'primary.main', position: 'relative', opacity: 0, ':hover': { opacity: 1 } }} />
-                                </IconButton>
-                                <IconButton disableRipple sx={{ ':hover': { color: 'black' } }}>
-                                    <ShoppingCartOutlinedIcon />
-                                </IconButton>
+                            <Button
+                                component='a'
+                                href={`/product/${itemRoute(item.name)}`}
+                                disableRipple
+                                sx={{ 
+                                    position: 'absolute',
+                                    height: 'inherit',
+                                    right: 0,
+                                    left: 0,
+                                    p: 0,
+                                    m: 0,
+                                    zIndex: 1,
+                                    bgcolor: 'transparent', 
+                                    ':hover': {
+                                        bgcolor: 'transparent', 
+                                    }
+                                }}
+                            />
+                            <Box className="interaction" sx={{ display: 'none', height: '100%', width: '100%', flexDirection: 'column'}}>
+                                <Box sx={{ position: 'relative', display: 'flex', alignItems: 'end', justifyContent: 'end' }}>
+                                    <IconButton disableRipple sx={{ zIndex: 2, m: 1, bgcolor: 'rgba(255,255,255,0.7)' }}>
+                                        <FavoriteBorderRoundedIcon sx={{ position: 'absolute', opacity: 1, ':hover': { opacity: 0 } }} />
+                                        <FavoriteRoundedIcon sx={{ color: 'primary.main', position: 'relative', opacity: 0, ':hover': { opacity: 1 } }} />
+                                    </IconButton>
+                                </Box>
+                                <Box sx={{ position: 'relative', display: 'flex', flexGrow: 1, alignItems: 'flex-end', justifyContent: 'center', pb: 2 }}>
+                                    <Button onClick={(e) => handleClickOpen(item)} size='large' variant='contained' sx={{ zIndex: 2, px: 2, fontWeight: 'bold', borderRadius: '10px' }}>
+                                        Quick Preview
+                                    </Button>
+                                </Box>
                             </Box>
                         </Box>
                     }
