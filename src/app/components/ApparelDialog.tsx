@@ -24,7 +24,7 @@ interface PhotoItem {
     secondaryUrl: string;
 }
 
-const TermDialog = ({item}: {item: PhotoItem | undefined}) => {
+const ApparelDialog = ({item}: {item: PhotoItem | undefined}) => {
     const itemRoute = (name: string | undefined) => {
         return name?.toLowerCase().replaceAll(' ', '-');
     }
@@ -115,4 +115,4 @@ const TermDialog = ({item}: {item: PhotoItem | undefined}) => {
     );
 };
 
-export default TermDialog;
+export default ApparelDialog;

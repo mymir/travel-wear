@@ -34,7 +34,7 @@ interface PhotoItem {
     secondaryUrl: string;
 }
 
-export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
+export default function MainDisplay({apparel, displayDone=true}: {apparel: PhotoItem[], displayDone?: boolean}) {
     const [open, setOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState<PhotoItem>();
 
@@ -263,29 +263,35 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
                     </Box>
                 </Grid>
             )}
-            <Toolbar />
-            <Grid item xs={12} sx={{ justifyContent: 'end', display: 'flex' }}>
-            {/* <Pagination count={numPages} page={currentPage} onChange={nextPage} color="primary" /> */}
-            <Box sx={{ bgcolor: 'transparent', width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
-            {!allLoaded ?
-                    <>
-                        {isLoading 
-                            ?
-                            <CircularProgress size='30px' />
+            {displayDone && 
+                <>
+                    <Toolbar />
+                    <Grid item xs={12} sx={{ justifyContent: 'end', display: 'flex' }}>
+                    {/* <Pagination count={numPages} page={currentPage} onChange={nextPage} color="primary" /> */}
+                    <Box sx={{ bgcolor: 'transparent', width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
+                    {!allLoaded ?
+                            <>
+                                {isLoading 
+                                    ?
+                                    <CircularProgress size='30px' />
+                                    :
+                                    <Button variant='outlined' onClick={handleClick} sx={{width: '140px', height: '61px', borderRadius: '80px'}}>
+                                        <h4>Load More</h4>
+                                    </Button>         
+                                }   
+                            </>
                             :
-                            <Button variant='outlined' onClick={handleClick} sx={{width: '140px', height: '61px', borderRadius: '80px'}}>
-                                <h4>Load More</h4>
-                            </Button>         
-                        }   
-                    </>
-                    :
-                    <Button variant='outlined' disabled onClick={handleClick} sx={{width: '140px', height: '61px', borderRadius: '80px'}}>
-                        <h4>{apparel.length}/{apparel.length}</h4>
-                    </Button>   
+                            <>
+                                    <Button variant='outlined' disabled onClick={handleClick} sx={{ width: '140px', height: '61px', borderRadius: '80px'}}>
+                                        <h4>{apparel.length}/{apparel.length}</h4>
+                                    </Button> 
+                            </>
+                    }
+                    <Toolbar />
+                    </Box>            
+                    </Grid>   
+                </>         
             }
-            </Box>            
-            </Grid>
-            <Toolbar />
         </Grid>
     )
 }
