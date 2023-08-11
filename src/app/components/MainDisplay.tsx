@@ -16,10 +16,8 @@ import CircleIcon from '@mui/icons-material/Circle';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import CircularProgress from '@mui/material/CircularProgress';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import ApparelDialog from './ApparelDialog'
@@ -46,7 +44,6 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
     const handleClickOpen = (item: PhotoItem) => {
       setOpen(true);
       setCurrentItem(item);
-      console.log(fullScreen);
     };
 
     const handleClose = () => {
@@ -270,7 +267,7 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
             <Grid item xs={12} sx={{ justifyContent: 'end', display: 'flex' }}>
             {/* <Pagination count={numPages} page={currentPage} onChange={nextPage} color="primary" /> */}
             <Box sx={{ bgcolor: 'transparent', width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
-            {!allLoaded &&
+            {!allLoaded ?
                     <>
                         {isLoading 
                             ?
@@ -281,6 +278,10 @@ export default function MainDisplay({apparel}: {apparel: PhotoItem[]}) {
                             </Button>         
                         }   
                     </>
+                    :
+                    <Button variant='outlined' disabled onClick={handleClick} sx={{width: '140px', height: '61px', borderRadius: '80px'}}>
+                        <h4>{apparel.length}/{apparel.length}</h4>
+                    </Button>   
             }
             </Box>            
             </Grid>

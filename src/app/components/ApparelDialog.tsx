@@ -1,12 +1,11 @@
 'use client'
 
-import { useState, Fragment } from 'react';
+import { Fragment } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
 import CircleIcon from '@mui/icons-material/Circle';
@@ -42,7 +41,6 @@ const TermDialog = ({item}: {item: PhotoItem | undefined}) => {
                             sx={{ 
                                 height: '60vh', 
                                 width: '100%', 
-                                // position: 'relative',
                                 backgroundPosition: "center", 
                                 backgroundSize: "cover", 
                                 backgroundRepeat: "no-repeat", 

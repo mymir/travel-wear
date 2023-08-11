@@ -11,7 +11,7 @@ import NavDrawer from './NavDrawer';
 
 export default function DrawerAppBar() {
   return (
-    <AppBar component="nav" position="sticky" sx={{ zIndex: 2, px: 5, boxShadow: 'none', borderBlock: '1px solid white' }}>
+    <AppBar component="nav" position="sticky" sx={{ zIndex: 3, px: 5, boxShadow: 'none', borderBlock: '1px solid white' }}>
       <Toolbar>
         <NavDrawer />
         <Button
