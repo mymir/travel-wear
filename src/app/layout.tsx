@@ -30,11 +30,7 @@ export default function RootLayout({
           <Box>
             <Banner />
             <Navbar />            
-            {children}            
-            <Toolbar />
-            <Toolbar />
-            <Toolbar />
-            <Toolbar />
+            {children} 
             <Footer />
           </Box>
         </ThemeRegistry>

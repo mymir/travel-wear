@@ -34,7 +34,7 @@ interface PhotoItem {
     secondaryUrl: string;
 }
 
-export default function MainDisplay({apparel, displayDone=true}: {apparel: PhotoItem[], displayDone?: boolean}) {
+export default function MainDisplay({apparel, spacing=2, displayDone=true}: {apparel: PhotoItem[], spacing?: number, displayDone?: boolean}) {
     const [open, setOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState<PhotoItem>();
 
@@ -109,7 +109,7 @@ export default function MainDisplay({apparel, displayDone=true}: {apparel: Photo
       }, [isLoading]);
     
     return (
-        <Grid container item spacing={2} xs={12} sm={12} md={10}>
+        <Grid container item spacing={spacing} xs={12} sm={12} md={10}>
             <Dialog                
                 open={open}
                 onClose={handleClose}
@@ -287,9 +287,9 @@ export default function MainDisplay({apparel, displayDone=true}: {apparel: Photo
                                     </Button> 
                             </>
                     }
-                    <Toolbar />
                     </Box>            
                     </Grid>   
+                    <Toolbar />
                 </>         
             }
         </Grid>

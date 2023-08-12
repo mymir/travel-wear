@@ -11,8 +11,8 @@ import NavDrawer from './NavDrawer';
 
 export default function DrawerAppBar() {
   return (
-    <AppBar component="nav" position="sticky" sx={{ zIndex: 3, px: 5, boxShadow: 'none', borderBlock: '1px solid white' }}>
-      <Toolbar>
+    <AppBar component="nav" position="sticky" sx={{ zIndex: 4, px: 5, boxShadow: 'none', borderBlock: '1px solid white' }}>
+      <Toolbar sx={{ minHeight: 0 }}>
         <NavDrawer />
         <Button
           disableRipple  
