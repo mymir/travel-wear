@@ -36,7 +36,7 @@ interface PhotoItem {
 export const womenTops: PhotoItem[] = [
     {
         id: 0,
-        name: 'Pink Crop',
+        name: 'Pink Tied Crop Top',
         price: 15,
         onSale: false,
         markdown: 0,
@@ -47,7 +47,7 @@ export const womenTops: PhotoItem[] = [
     },
     {
         id: 1,
-        name: 'Grey Shirt',
+        name: 'Grey Graphic T-Shirt',
         price: 25,
         onSale: true,
         markdown: 10,
@@ -58,7 +58,7 @@ export const womenTops: PhotoItem[] = [
     },
     {
         id: 2,
-        name: 'Tan Graphic',
+        name: 'Tan Graphic T-Shirt',
         price: 30,
         onSale: false,
         markdown: 0,
@@ -69,7 +69,7 @@ export const womenTops: PhotoItem[] = [
     },
     {
         id: 3,
-        name: 'Yellow Puffer',
+        name: 'Yellow Heavy Puffer Jacket',
         price: 60,
         onSale: false,
         markdown: 0,
@@ -80,7 +80,7 @@ export const womenTops: PhotoItem[] = [
     },
     {
         id: 4,
-        name: 'Jean Jacket',
+        name: 'Classic Blue Denim Jacket',
         price: 53,
         onSale: false,
         markdown: 0,
@@ -91,7 +91,7 @@ export const womenTops: PhotoItem[] = [
     },
     {
         id: 5,
-        name: 'Flower Jacket',
+        name: 'Sherpa Multi-Colored Flower Jacket',
         price: 25,
         onSale: false,
         markdown: 0,
@@ -102,7 +102,7 @@ export const womenTops: PhotoItem[] = [
     },
     {
         id: 6,
-        name: 'Basic Hoodie',
+        name: 'Classic Solid Colored Hoodie',
         price: 36,
         onSale: true,
         markdown: 5,
@@ -113,7 +113,7 @@ export const womenTops: PhotoItem[] = [
     },
     {
         id: 7,
-        name: 'Skeleton Tee',
+        name: 'Skeletal Hand Graphic T-Shirt',
         price: 15,
         onSale: false,
         markdown: 0,
@@ -149,7 +149,7 @@ export const menBottoms: PhotoItem[] = [
     },
     {
         id: 2,
-        name: 'Dress Pants',
+        name: 'Classic Grey Dress Pants',
         price: 27,
         onSale: false,
         markdown: 0,
@@ -171,7 +171,7 @@ export const menBottoms: PhotoItem[] = [
     },
     {
         id: 4,
-        name: 'Black Jeans',
+        name: 'Black Slim Fit Jeans',
         price: 25,
         onSale: true,
         markdown: 10,
@@ -182,7 +182,7 @@ export const menBottoms: PhotoItem[] = [
     },
     {
         id: 5,
-        name: 'Tan Jeans',
+        name: 'Tan Slim Fit Jeans',
         price: 25,
         onSale: true,
         markdown: 10,
@@ -193,7 +193,7 @@ export const menBottoms: PhotoItem[] = [
     },
     {
         id: 6,
-        name: 'Green Sports Sweats',
+        name: 'Green Slim Fit Sports Sweats',
         price: 20,
         onSale: false,
         markdown: 0,
@@ -204,7 +204,7 @@ export const menBottoms: PhotoItem[] = [
     },
     {
         id: 7,
-        name: 'Ripped Jeans',
+        name: 'Ripped Straight Fit Jeans',
         price: 30,
         onSale: false,
         markdown: 0,

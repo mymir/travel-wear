@@ -31,9 +31,9 @@ const navIcons = [
 
 export default function NavIcons() {
     return (
-        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+        <Box sx={{ display: 'flex' }}>
             {navIcons.map((item) => (
-              <IconButton key={item.id} aria-label={item.label} sx={{ color: '#fff' }} component='a' href={item.route}>
+              <IconButton key={item.id} aria-label={item.label} sx={{ color: '#fff', px: { xs: 0.5, sm: 1, md: 1 } }} component='a' href={item.route}>
                 {item.icon}
               </IconButton>
             ))}

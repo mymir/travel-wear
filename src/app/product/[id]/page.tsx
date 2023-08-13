@@ -1,21 +1,15 @@
 'use client'
 
-import { useState } from 'react';
-import { useTheme } from '@mui/material/styles';
-import { Fragment } from 'react';
+import { useState, Fragment } from 'react';
 
 import Dialog from '@mui/material/Dialog';
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import CircleIcon from '@mui/icons-material/Circle';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
-import Toolbar from '@mui/material/Toolbar';
-import { SolidRating } from '@/app/components/SolidRating';
+import ProductDesktop from './ProductDesktop';
+import ProductMobile from './ProductMobile';
 
 interface PhotoItem {
     id: number;
@@ -51,33 +45,15 @@ const images: string[] = [
 export default function Page({ params }: { params: { id: string } }) {
     const [open, setOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState<PhotoItem>();
-    const [currentImage, setCurrentImage] = useState<String>(images[0]);
 
-    const theme = useTheme();
-    const rating: number = 4.5;
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleClickOpen = (item: PhotoItem) => {
         setCurrentItem(item);
         setOpen(true);
       };
-  
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const selectPhoto = (elId: number) => {
-        images.forEach((_image, index) => {
-            let elButton: HTMLElement | null = document.getElementById(index + 'Button');
-            if (index == elId && elButton) {
-                elButton.style.opacity = '1';
-            } else if (elButton) {
-                elButton.style.opacity = '0.5';
-            }
-        })
-        if(images[elId]) {
-            setCurrentImage(images[elId]);
-        }
-    }
 
     const scrollToTarget = (elId: string) => {
         console.log(elId);
@@ -85,7 +61,6 @@ export default function Page({ params }: { params: { id: string } }) {
         console.log(el);
         el?.scrollIntoView({ behavior: 'smooth' });
     }
-
     return (
         <Fragment>
             <Dialog                
@@ -127,7 +102,7 @@ export default function Page({ params }: { params: { id: string } }) {
                         <CloseOutlinedIcon sx={{ fontSize: '30px', fontWeight: 'thin' }} />
                     </IconButton>
                 </Box>
-                <Box sx={{ position: 'fixed', top: '10px', display: 'flex', flexDirection: 'column', my: 2, mx: 4, bgcolor: 'rgba(255,255,255,0.7)', borderRadius: 1, p: 2 }}>
+                <Box sx={{ display: { xs: 'none', sm: 'none', md: 'flex' }, position: 'fixed', top: '10px', flexDirection: 'column', my: 2, mx: 4, bgcolor: 'rgba(255,255,255,0.7)', borderRadius: 1, p: 2 }}>
                     {images.map((image, index) =>                         
                         <Button
                             key={index}
@@ -152,154 +127,12 @@ export default function Page({ params }: { params: { id: string } }) {
                     )}
                 </Box>
             </Dialog>
-            <Toolbar />
-            <Container 
-                maxWidth={false}
-                sx={{ mx: 6, my: 2, display: 'flex' }}
-            >
-                <Box sx={{ height: '100vh', width: '100px', mr: 2, overflow: 'scroll', scrollbarWidth: 'none', scrollbarColor: 'transparent', scrollbarGutter: '0px'}}>
-                    {images.map((image, index) => 
-                    <>
-                        {index == 0 
-                        ?
-                            <Button
-                                key={index}
-                                id={index + 'Button'}
-                                onClick={(e) => selectPhoto(index)}
-                                disableRipple
-                                sx={{         
-                                    position: 'relative',                                
-                                    height: '150px', 
-                                    width: '100px',
-                                    mb: 1,
-                                    opacity: 1,
-                                    backgroundPosition: "center", 
-                                    backgroundSize: "cover", 
-                                    backgroundRepeat: "no-repeat", 
-                                    backgroundImage: `url(${image})`,
-                                    ':active, :hover': {
-                                        opacity: 1
-                                    }
-                                }}
-                            >
-                            </Button>
-                        :
-                            <Button
-                                key={index}
-                                id={index + 'Button'}
-                                onClick={(e) => selectPhoto(index)}
-                                disableRipple
-                                sx={{         
-                                    position: 'relative',                                
-                                    height: '150px', 
-                                    width: '100px',
-                                    mb: 1,
-                                    opacity: 0.5,
-                                    backgroundPosition: "center", 
-                                    backgroundSize: "cover", 
-                                    backgroundRepeat: "no-repeat", 
-                                    backgroundImage: `url(${image})`,
-                                    ':active, :hover': {
-                                        opacity: 1
-                                    }
-                                }}
-                            >
-                            </Button>
-                        }
-                    </>
-                    )}
-                </Box>
-                <Box
-                    sx={{ 
-                        height: '100vh', 
-                        width: '40vw', 
-                        backgroundPosition: "center", 
-                        backgroundSize: "cover", 
-                        backgroundRepeat: "no-repeat", 
-                        backgroundImage: `url(${currentImage})`,
-                    }}
-                >
-                    <Button
-                        onClick={(e) => handleClickOpen(item)}
-                        disableRipple
-                        sx={{ 
-                            position: 'relative',
-                            width: '100%',
-                            height: 'inherit',
-                            right: 0,
-                            left: 0,
-                            p: 0,
-                            m: 0,
-                            zIndex: 1,
-                            bgcolor: 'transparent', 
-                            ':hover': {
-                                bgcolor: 'transparent', 
-                                cursor: 'zoom-in',
-                            }
-                        }}
-                    />
-                </Box>
-                <Box sx={{ ml: 10 }}>
-                    <Typography 
-                        variant='h4'
-                        sx={{  
-                            display: 'block',
-                        }}
-                    >
-                        {item?.name}
-                    </Typography>
-                    <Box sx={{ display: 'flex' }}>
-                        <SolidRating startValue={rating} />
-                        <Typography 
-                            variant='body2'
-                            component='a'
-                            sx={{  
-                                display: 'flex',
-                            }}
-                        >
-                            (1,245)
-                        </Typography>
-                        </Box>
-                    <Typography 
-                        variant='h6'
-                        sx={{  
-                            display: 'block',
-                        }}
-                    >
-                        ${item?.price}.00
-                    </Typography>
-                    <Divider/>
-                    <Typography 
-                        variant='h6'
-                        sx={{  
-                            display: 'block',
-                        }}
-                    >
-                        Color: {item?.colors[0]}
-                    </Typography>
-                    {item?.colors.map((color, index) =>        
-                        <IconButton key={index} disableRipple sx={{ borderRadius: 5, border: 'grey 2px solid', p: 0, mr: 0.5, ':hover': { border: 'black 2px solid' } }}>
-                            <CircleIcon sx={{ color: {color}, fontSize: '15px' }} />
-                        </IconButton>  
-                    )}
-                    <Typography 
-                        variant='h6'
-                        sx={{  
-                            display: 'block',
-                        }}
-                    >
-                        Size:
-                    </Typography>
-                    {['xs','sm','md','lg','xl'].map((size, index) =>        
-                        <Button key={index} disableRipple sx={{ borderRadius: 5, border: 'grey 2px solid', p: 0, mr: 0.5, ':hover': { border: 'black 2px solid' } }}>
-                            {size}
-                        </Button>  
-                    )}
-                    <Button variant='contained' disableElevation sx={{ width: '100%', fontWeight: 'bold', py: 2, color: 'white' }}>
-                        Add To Cart
-                    </Button>
-                </Box>
-            </Container>
+            <Box sx={{ display: {xs: 'none', sm: 'none', md: 'flex'} }}>
+                <ProductDesktop id={params.id} handleClickOpen={handleClickOpen}/>
+            </Box>
+            <Box sx={{ display: {xs: 'flex', sm: 'flex', md: 'none'} }}>
+                <ProductMobile id={params.id} handleClickOpen={handleClickOpen}/>
+            </Box>
         </Fragment>
     );
 }
