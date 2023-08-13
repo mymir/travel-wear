@@ -69,11 +69,15 @@ export default function LoginForm() {
                 </Typography>
                 <TextField fullWidth type='password' color="secondary" id="password-input" variant="outlined" />
             </Grid>
-            <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
-                <FormControlLabel control={<Checkbox color="secondary" sx={{ color: 'black' }} />} label="Remember me" sx={{ display: 'flex', flexGrow: 1 }} />
-                <Link color="secondary">
-                    Forgot your password?
-                </Link>
+            <Grid item container spacing={2} xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Grid item xs={12} sm={12} md={6}>
+                    <FormControlLabel control={<Checkbox color="secondary" id="remember-me" sx={{ color: 'black' }} />} label="Remember me" sx={{ display: 'flex', flexGrow: 1 }} />
+                </Grid>
+                <Grid item xs={12} sm={12} md={6}>
+                    <Link color="secondary">
+                        Forgot your password?
+                    </Link>
+                </Grid>
             </Grid>
             <Grid item xs={12} >
                 <Button color="secondary" onClick={handleSubmit} fullWidth variant='contained' sx={{ fontWeight: 'bold', p: 2 }}>
@@ -85,17 +89,17 @@ export default function LoginForm() {
                     Or Sign In With...
                 </Typography>
             </Grid>
-            <Grid item xs={4} >
+            <Grid item xs={12} sm={12} md={4} >
                 <Button color="secondary" onClick={handleSubmit} fullWidth variant='outlined' startIcon={<GoogleIcon />} sx={{ fontWeight: 'bold', p: 2 }}>
                     Google
                 </Button>
             </Grid>
-            <Grid item xs={4} >
+            <Grid item xs={12} sm={12} md={4} >
                 <Button color="secondary" onClick={handleSubmit} fullWidth variant='outlined' startIcon={<AppleIcon />} sx={{ fontWeight: 'bold', p: 2 }}>
                     Apple
                 </Button>
             </Grid>
-            <Grid item xs={4} >
+            <Grid item xs={12} sm={12} md={4} >
                 <Button color="secondary" onClick={handleSubmit} fullWidth variant='outlined' startIcon={<FacebookRoundedIcon />} sx={{ fontWeight: 'bold', p: 2 }}>
                     Facebook
                 </Button>

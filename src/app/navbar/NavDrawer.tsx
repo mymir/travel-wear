@@ -11,7 +11,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
 
-import DrawerAccordion from './DrawerAccordian';
+import DrawerAccordion from '../components/DrawerAccordian';
 import  { navLinks } from '../links'
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -36,7 +36,7 @@ export default function NavDrawer() {
     const drawerWidth = 240;
 
     return (
-        <Box sx={{ flexGrow: 1, mr: 2, display: { sm: 'none' }}}>
+        <Box sx={{ zIndex: 5, flexGrow: 1, display: { xs: 'flex', sm: 'flex',md: 'none' }}}>
             <Button
                 size="large"
                 aria-label="nav aria"
@@ -54,6 +54,7 @@ export default function NavDrawer() {
                 open={open}
                 sx={{
                     width: drawerWidth,
+                    position: 'absolute',
                     '& .MuiDrawer-paper': {
                         width: drawerWidth,
                         boxSizing: 'border-box',
@@ -61,7 +62,7 @@ export default function NavDrawer() {
                 }}
             >
                 <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
+                    <IconButton onClick={handleDrawerClose} sx={{ minWidth: 0 }}>
                         <CloseOutlinedIcon />
                     </IconButton>
                 </DrawerHeader>

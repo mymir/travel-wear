@@ -10,7 +10,6 @@ import Button from '@mui/material/Button';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
-import { setTimeout } from 'timers/promises';
 
 interface heroItem {
     id: number;
@@ -40,21 +39,20 @@ const carouselItems: heroItem[] = [
         mainText: 'Featured Jackets',
         buttonLink: '/featured',
         buttonText: 'Shop Now',
-        image: 'https://images.unsplash.com/photo-1534310524055-36166a36e6f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2938&q=80'
+        image: 'https://images.unsplash.com/photo-1510853851847-5c02796e8c8a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2730&q=80'
     }
 ]
 
 export default function DesktopHeroCarousel() {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [scrollItem, setScrollItem] = useState(document.getElementById('scroll-container'));
+    const [currentIndex, setCurrentIndex] = useState(-1);
+    const [scrollWidth, setScrollWidth] = useState(0);
+    const [scrollItem, setScrollItem] = useState< HTMLElement| null >(null);
 
     const intervalRef = useRef<NodeJS.Timer | null>(null);
 
     const maxIndex = carouselItems.length - 1;
-    const scrollWidth = window.innerWidth;
 
     const onNext = () => {
-        console.log('called')
         if(scrollItem) {
             if(currentIndex == maxIndex) {
                 setCurrentIndex(0);
@@ -88,22 +86,11 @@ export default function DesktopHeroCarousel() {
         }
     }
 
-    // const updateCarousel = () => {
-    //     for ( let i = 0; i < carouselItems.length; i++ ) {
-    //         let currentIndicator = document.getElementById(`${i}`);
-    //         if( i == currentIndex && currentIndicator) {
-    //             currentIndicator.style.opacity = '1';
-    //         } else if (currentIndicator) {
-    //             currentIndicator.style.opacity = '0.5';
-    //         }
-    //     }
-    //     let scrollFactor = currentIndex * scrollWidth;
-    //     scrollItem?.scroll({left: scrollFactor, top: 0, behavior: 'smooth'});
-    // }
-
     useEffect(() => {
         const renderedScrollItem = document.getElementById('scroll-container');
         setScrollItem(renderedScrollItem);
+        setCurrentIndex(0);
+        setScrollWidth(window.innerWidth);
     }, []);
 
     useEffect(() => {
@@ -119,7 +106,7 @@ export default function DesktopHeroCarousel() {
         let scrollFactor = currentIndex * scrollWidth;
         scrollItem?.scroll({left: scrollFactor, top: 0, behavior: 'smooth'});
         intervalRef.current = setInterval(
-            () => onNext(), 7000);
+            () => onNext(), 5000);
           return () => {
             resetTimeout();
           };

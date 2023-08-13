@@ -61,17 +61,17 @@ export default function SignUpForm() {
                     Sign Up With...
                 </Typography>
             </Grid>
-            <Grid item xs={4} >
+            <Grid item xs={12} sm={12} md={4} >
                 <Button color="secondary" onClick={handleSubmit} fullWidth variant='outlined' startIcon={<GoogleIcon />} sx={{ fontWeight: 'bold', p: 2 }}>
                     Google
                 </Button>
             </Grid>
-            <Grid item xs={4} >
+            <Grid item xs={12} sm={12} md={4} >
                 <Button color="secondary" onClick={handleSubmit} fullWidth variant='outlined' startIcon={<AppleIcon />} sx={{ fontWeight: 'bold', p: 2 }}>
                     Apple
                 </Button>
             </Grid>
-            <Grid item xs={4} >
+            <Grid item xs={12} sm={12} md={4} >
                 <Button color="secondary" onClick={handleSubmit} fullWidth variant='outlined' startIcon={<FacebookRoundedIcon />} sx={{ fontWeight: 'bold', p: 2 }}>
                     Facebook
                 </Button>
@@ -91,19 +91,19 @@ export default function SignUpForm() {
                 <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
                     Confirm Email:
                 </Typography>
-                <TextField fullWidth type='email' color="secondary" id="email-input" variant="outlined" />
+                <TextField fullWidth type='email' color="secondary" id="confirm-email-input" variant="outlined" />
             </Grid>
             <Grid item xs={12} >
                 <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
                     First Name:
                 </Typography>
-                <TextField fullWidth color="secondary" id="email-input" variant="outlined" />
+                <TextField fullWidth color="secondary" id="first-name-input" variant="outlined" />
             </Grid>
             <Grid item xs={12} >
                 <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
                     Last Name:
                 </Typography>
-                <TextField fullWidth color="secondary" id="email-input" variant="outlined" />
+                <TextField fullWidth color="secondary" id="last-name-input" variant="outlined" />
             </Grid>
             <Grid item xs={12} >
                 <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
@@ -115,11 +115,11 @@ export default function SignUpForm() {
                 <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
                     Confirm Password:
                 </Typography>
-                <TextField fullWidth type='password' color="secondary" id="password-input" variant="outlined" />
+                <TextField fullWidth type='password' color="secondary" id="confirm-password-input" variant="outlined" />
             </Grid>
             <Grid container item spacing={0} xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
                 <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
-                    <FormControlLabel control={<Checkbox defaultChecked color="secondary" sx={{ color: 'black' }} />} label="Sign up for emails" sx={{ display: 'block', width: '100%' }} />
+                    <FormControlLabel control={<Checkbox defaultChecked color="secondary" id="email-agreement" sx={{ color: 'black' }} />} label="Sign up for emails" sx={{ display: 'block', width: '100%' }} />
                 </Grid>
                 <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
                     <Typography variant='body2' sx={{ display: 'block', width: '100%' }}>

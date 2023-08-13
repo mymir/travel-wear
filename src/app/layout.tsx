@@ -2,14 +2,12 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 
 import Banner from './components/Banner'
-import Navbar from './components/Navbar'
+import Navbar from './navbar/Navbar'
 import ThemeRegistry from './components/ThemeRegistry';
 import Footer from './components/Footer'
-
 
 const inter = Inter({ subsets: ['latin'] })
 

@@ -7,30 +7,43 @@ import MuiAccordionSummary, {
 } from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
-interface FilterItem {
+interface Detail {
     id: number;
     label: string;
-    items: string[];
+    text: string[];
 }
 
 const Accordion = styled((props: AccordionProps) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
   ))(({ theme }) => ({
     borderBlock: `1px solid ${theme.palette.divider}`,
-    borderBottom: 0,
+    width: '100%',
+    height: '100%',
+    '&:not(:last-child)': {
+        borderBottom: 0,
+    },
     '&:before': {
       display: 'none',
+    },
+    '& .MuiButtonBase-root': {
+        margin: theme.spacing(0),
+        padding: theme.spacing(0),
+        fontWeight: 'bold'
     },
   }));
 
   const AccordionSummary = styled((props: AccordionSummaryProps) => (
     <MuiAccordionSummary
-      expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
+      expandIcon={<AddRoundedIcon sx={{ fontSize: '1.5rem' }} />}
       {...props}
     />
   ))(({ theme }) => ({
-    flexDirection: 'row-reverse',
+    '& .MuiAccordionSummary-expandIconWrapper': {
+        margin: theme.spacing(0),
+        padding: theme.spacing(0),
+    },
     '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
       transform: 'rotate(90deg)',
     },
@@ -41,18 +54,17 @@ const Accordion = styled((props: AccordionProps) => (
       margin: theme.spacing(0),
       marginLeft: theme.spacing(1),
     },
+    '& .MuiAccordionSummary-content, p': {
+      fontWeight: 'bold'    
+    },
   }));
   
   const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-    backgroundColor:
-    theme.palette.mode === 'dark'
-      ? 'rgba(255, 255, 255, .05)'
-      : 'rgba(0, 0, 0, .03)',
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     borderTop: '1px solid rgba(0, 0, 0, .125)',
   }));
 
-  export default function FilterAccordian({filterItems}: {filterItems: FilterItem[]}) {
+  export default function DetailAccordian({itemDetails}: {itemDetails: Detail[]}) {
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
   
     const handleChange =
@@ -62,7 +74,7 @@ const Accordion = styled((props: AccordionProps) => (
   
     return (
       <div>
-        {filterItems.map((item) => (
+        {itemDetails.map((item) => (
             <Accordion key={item.id} expanded={expanded === item.label} onChange={handleChange(item.label)} sx={{ mr:5 }}>
               <AccordionSummary aria-controls={item.label} id={item.label}>
                   <Typography variant='body1' sx={{ textDecoration: 'none', color: 'text.primary', ':hover': { color: 'primary.main' } }}>
@@ -70,11 +82,13 @@ const Accordion = styled((props: AccordionProps) => (
                   </Typography>
               </AccordionSummary>
               <AccordionDetails sx={{ alignItems: 'left' }}>
-                  {item.items.map((filter, index) => (
-                      <Typography variant='body2' key={index} sx={{ width: '100%', height: '100%', justifyContent: 'left', color: 'text.primary', ':hover': { color: 'primary.main', bgcolor: 'transparent' } }}>
-                          {filter}
+                {/* <ul> */}
+                  {item.text.map((detail, index) => (
+                      <Typography variant='body2' component='li' sx={{ py: 0.5 }}>
+                          {detail}
                       </Typography>
                   ))}
+                  {/* </ul> */}
               </AccordionDetails>
             </Accordion>
         ))}

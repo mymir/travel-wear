@@ -10,7 +10,7 @@ export default function NavLinks() {
     const pathname = usePathname()
 
     return (
-        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+        <Box sx={{ flexGrow: 1, justifyContent: 'center', display: { xs: 'none', sm: 'none', md: 'flex' } }}>
             {navLinks.map((item) => {
 
                 if(item.route === pathname ) {

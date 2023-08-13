@@ -9,8 +9,8 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
 
-import LoginForm from '../components/LoginForm';
-import SignUpForm from '../components/SignUpForm';
+import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -55,7 +55,7 @@ function AuthTabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
@@ -69,7 +69,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function BasicTabs() {
+export default function Login() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

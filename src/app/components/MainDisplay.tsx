@@ -1,20 +1,16 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-// import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-// import Pagination from '@mui/material/Pagination';
 import CircleIcon from '@mui/icons-material/Circle';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
-import CircularProgress from '@mui/material/CircularProgress';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Dialog from '@mui/material/Dialog';
@@ -34,7 +30,7 @@ interface PhotoItem {
     secondaryUrl: string;
 }
 
-export default function MainDisplay({apparel, spacing=2, displayDone=true}: {apparel: PhotoItem[], spacing?: number, displayDone?: boolean}) {
+export default function MainDisplay({apparel, spacing=2}: {apparel: PhotoItem[], spacing?: number}) {
     const [open, setOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState<PhotoItem>();
 
@@ -50,63 +46,9 @@ export default function MainDisplay({apparel, spacing=2, displayDone=true}: {app
         setOpen(false);
     };
 
-    const ref = useRef<null | HTMLDivElement>(null); 
-
-    const [isLoading, setIsLoading] = useState(false);
-    const [allLoaded, setAllLoaded] = useState(false);
-
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage, setPostsPerPage] = useState(12);
-
-    const numPages = Math.ceil(apparel.length/postsPerPage);
-
-    const lastIndex = currentPage * postsPerPage;
-    const firstIndex = lastIndex - postsPerPage;
-    const currentPosts = apparel.slice(firstIndex, lastIndex);
-
-    // const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    //     setCurrentPage(value);
-    //     // console.log('current: ' + currentPage);
-    //     // ref.current?.scrollIntoView({ behavior: 'smooth', block: "center" });
-    // };
-
-    const nextPage = () => {        
-        setPostsPerPage(postsPerPage + 8);
-        console.log(postsPerPage);
-        setIsLoading(false);
-        // ref.current?.scrollIntoView({ behavior: 'smooth', block: "center" });
-    };
-
     const itemRoute = (name: string) => {
         return name.toLowerCase().replaceAll(' ', '-');
     }
-
-    const handleScroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop < (document.documentElement.offsetHeight - 350) || isLoading || postsPerPage >= apparel.length) {
-            if(postsPerPage >= apparel.length) {
-                setAllLoaded(true);
-            }
-            return;
-        }        
-        setIsLoading(true);
-        setTimeout(nextPage, 1000);
-    };
-
-    const handleClick = () => {
-        if (isLoading || postsPerPage >= apparel.length) {
-            if(postsPerPage >= apparel.length) {
-                setAllLoaded(true);
-            }
-            return;
-        }        
-        setIsLoading(true);
-        setTimeout(nextPage, 3000);
-    }
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-      }, [isLoading]);
     
     return (
         <Grid container item spacing={spacing} xs={12} sm={12} md={10}>
@@ -126,8 +68,7 @@ export default function MainDisplay({apparel, spacing=2, displayDone=true}: {app
                 </DialogTitle>
                 <ApparelDialog item={currentItem}/>
             </Dialog>
-            <div ref={ref}/>
-            {currentPosts.map((item) => 
+            {apparel.map((item) => 
                 <Grid item xs={12} sm={6} md={3} key={item.id}>
                     {item.featured 
                     ?
@@ -139,7 +80,7 @@ export default function MainDisplay({apparel, spacing=2, displayDone=true}: {app
                             p: 0,
                             m: 0,
                             bgcolor: 'background.paper', 
-                            borderRadius: '10px 10px 10px 10px',
+                            borderRadius: '5px',
                             backgroundPosition: "center",
                             backgroundSize: "cover",
                             backgroundRepeat: "no-repeat",
@@ -155,7 +96,7 @@ export default function MainDisplay({apparel, spacing=2, displayDone=true}: {app
                     >
                         <Button
                             component='a'
-                            href={`/product/${itemRoute(item.name)}`}
+                            href={`/product/${item.id}`}
                             disableRipple
                             sx={{ 
                                 position: 'absolute',
@@ -179,7 +120,7 @@ export default function MainDisplay({apparel, spacing=2, displayDone=true}: {app
                                 </IconButton>
                             </Box>
                             <Box sx={{ position: 'relative', display: 'flex', flexGrow: 1, alignItems: 'flex-end', justifyContent: 'center', pb: 2 }}>
-                                <Button onClick={(e) => handleClickOpen(item)} size='large' variant='contained' sx={{ zIndex: 2, px: 2, fontWeight: 'bold', borderRadius: '10px' }}>
+                                <Button onClick={(e) => handleClickOpen(item)} size='large' variant='contained' sx={{ zIndex: 2, px: 2, fontWeight: 'bold', borderRadius: '5px' }}>
                                     Quick Preview
                                 </Button>
                             </Box>
@@ -194,7 +135,7 @@ export default function MainDisplay({apparel, spacing=2, displayDone=true}: {app
                                 p: 0,
                                 m: 0,
                                 bgcolor: 'background.paper', 
-                                borderRadius: '10px 10px 10px 10px',
+                                borderRadius: '5px',
                                 backgroundPosition: "center",
                                 backgroundSize: "cover",
                                 backgroundRepeat: "no-repeat",
@@ -234,7 +175,7 @@ export default function MainDisplay({apparel, spacing=2, displayDone=true}: {app
                                     </IconButton>
                                 </Box>
                                 <Box sx={{ position: 'relative', display: 'flex', flexGrow: 1, alignItems: 'flex-end', justifyContent: 'center', pb: 2 }}>
-                                    <Button onClick={(e) => handleClickOpen(item)} size='large' variant='contained' sx={{ zIndex: 2, px: 2, fontWeight: 'bold', borderRadius: '10px' }}>
+                                    <Button onClick={(e) => handleClickOpen(item)} size='large' variant='contained' sx={{ zIndex: 2, px: 2, fontWeight: 'bold', borderRadius: '5px' }}>
                                         Quick Preview
                                     </Button>
                                 </Box>
@@ -263,35 +204,6 @@ export default function MainDisplay({apparel, spacing=2, displayDone=true}: {app
                     </Box>
                 </Grid>
             )}
-            {displayDone && 
-                <>
-                    <Toolbar />
-                    <Grid item xs={12} sx={{ justifyContent: 'end', display: 'flex' }}>
-                    {/* <Pagination count={numPages} page={currentPage} onChange={nextPage} color="primary" /> */}
-                    <Box sx={{ bgcolor: 'transparent', width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
-                    {!allLoaded ?
-                            <>
-                                {isLoading 
-                                    ?
-                                    <CircularProgress size='30px' />
-                                    :
-                                    <Button variant='outlined' onClick={handleClick} sx={{width: '140px', height: '61px', borderRadius: '80px'}}>
-                                        <h4>Load More</h4>
-                                    </Button>         
-                                }   
-                            </>
-                            :
-                            <>
-                                    <Button variant='outlined' disabled onClick={handleClick} sx={{ width: '140px', height: '61px', borderRadius: '80px'}}>
-                                        <h4>{apparel.length}/{apparel.length}</h4>
-                                    </Button> 
-                            </>
-                    }
-                    </Box>            
-                    </Grid>   
-                    <Toolbar />
-                </>         
-            }
         </Grid>
     )
 }
