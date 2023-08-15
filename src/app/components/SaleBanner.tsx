@@ -14,7 +14,7 @@ export default function SaleBanner({text, image}: {text: string, image: string})
                 display: 'flex',
                 zIndex: 0,
                 bgcolor: 'background.paper', 
-                height: '40vh', 
+                height: '22vw', 
                 borderRadius: '5px', 
                 border: '1px solid white',
                 backgroundPosition: "center",

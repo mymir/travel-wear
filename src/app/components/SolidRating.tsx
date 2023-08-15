@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 
-export const SolidRating = ({startValue}: {startValue: number}) => {
+export const SolidRating = ({startValue=0}: {startValue?: number}) => {
     const [value, setValue] = useState<number | null>(startValue);
 
     return (

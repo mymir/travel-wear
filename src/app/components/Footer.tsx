@@ -56,8 +56,6 @@ export default function Footer() {
             <GitHubIcon />
           </IconButton>
         </Grid>
-
-
         <Grid item xs={2} sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant='body1' sx={{ fontWeight: 'bold', mb:3 }}>
             Information

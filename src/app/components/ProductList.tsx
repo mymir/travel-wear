@@ -12,19 +12,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 import MainDisplay from './MainDisplay';
 import Sidebar from './Sidebar';
 
-interface PhotoItem {
-    id: number;
-    name: string;
-    price: number;
-    onSale: boolean;
-    markdown: number;
-    featured: boolean;
-    colors: string[];
-    primaryUrl: string;    
-    secondaryUrl: string;
-}
+import { Product } from '../productInterface';
 
-export default function ProductList({apparel}:{apparel: PhotoItem[]}) {
+export default function ProductList({apparel}:{apparel: Product[]}) {
   const [isLoading, setIsLoading] = useState(false);
   const [allLoaded, setAllLoaded] = useState(false);
 
@@ -46,7 +36,7 @@ export default function ProductList({apparel}:{apparel: PhotoItem[]}) {
     }        
     setIsLoading(true);
     setTimeout(nextPage, 1000);
-};
+  };
 
   const handleClick = () => {
     if (isLoading || postsPerPage >= apparel.length) {
@@ -57,16 +47,15 @@ export default function ProductList({apparel}:{apparel: PhotoItem[]}) {
     }        
     setIsLoading(true);
     setTimeout(nextPage, 3000);
-}
+  }
 
-const nextPage = () => {        
-  setPostsPerPage(postsPerPage + 8);
-  console.log(postsPerPage);
-  setIsLoading(false);
-};
+  const nextPage = () => {        
+    setPostsPerPage(postsPerPage + 8);
+    console.log(postsPerPage);
+    setIsLoading(false);
+  };
 
-
-useEffect(() => {
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isLoading]);

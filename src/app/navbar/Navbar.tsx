@@ -11,7 +11,7 @@ import NavDrawer from './NavDrawer';
 
 export default function DrawerAppBar() {
   return (
-    <AppBar component="nav" position="sticky" sx={{ zIndex: 4, boxShadow: 'none', borderBlock: '1px solid white', px: 2 }}>
+    <AppBar component="nav" position="sticky" sx={{ zIndex: 4, boxShadow: 'none', bgcolor: '#fdfdfd', color: 'black', borderBlock: '1px solid rgba(0,0,0,0.2)', px: 2 }}>
       <Toolbar sx={{ minHeight: 0 }}>
         <NavDrawer />
         <Button
@@ -21,7 +21,7 @@ export default function DrawerAppBar() {
           href='/home'
           sx={{ 
             display: { xs: 'none', sm: 'none', md: 'block' }, 
-            color: 'primary.contrastText',
+            color: 'black',
             fontWeight: 'bold',
             ':hover': { color: 'white' }
           }}
@@ -47,7 +47,7 @@ export default function DrawerAppBar() {
             href='/home'
             sx={{ 
               display: { xs: 'flex', sm: 'flex', md: 'none' },
-              color: 'primary.contrastText',
+              color: 'black',
               fontWeight: 'bold',
               ':hover': { color: 'white' }
             }}

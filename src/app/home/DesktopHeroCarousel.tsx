@@ -40,7 +40,14 @@ const carouselItems: heroItem[] = [
         buttonLink: '/featured',
         buttonText: 'Shop Now',
         image: 'https://images.unsplash.com/photo-1510853851847-5c02796e8c8a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2730&q=80'
-    }
+    },
+    {
+        id: 3,
+        mainText: 'Summer Sale',
+        buttonLink: '/sale',
+        buttonText: 'Shop Now',
+        image: 'https://images.unsplash.com/photo-1586396847415-2c76ae7e79fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80'
+    },
 ]
 
 export default function DesktopHeroCarousel() {
@@ -54,6 +61,10 @@ export default function DesktopHeroCarousel() {
 
     const onNext = () => {
         if(scrollItem) {
+            if(scrollItem.scrollLeft == (scrollItem.scrollWidth - scrollItem.clientWidth)) {
+                scrollItem.scroll({left: 0, top: 0, behavior: 'instant'});
+                return handleClick(1);
+            }
             if(currentIndex == maxIndex) {
                 setCurrentIndex(0);
             } else {
@@ -66,6 +77,10 @@ export default function DesktopHeroCarousel() {
 
     const onPrev = () => {
         if(scrollItem) {
+            if(scrollItem.scrollLeft == (0)) {
+                scrollItem.scroll({left: scrollItem.scrollWidth - scrollItem.clientWidth, top: 0, behavior: 'instant'});
+                return handleClick(maxIndex - 1);
+            }
             if(currentIndex == 0) {
                 setCurrentIndex(maxIndex);
             } else {
@@ -87,7 +102,7 @@ export default function DesktopHeroCarousel() {
     }
 
     useEffect(() => {
-        const renderedScrollItem = document.getElementById('scroll-container');
+        const renderedScrollItem = document.getElementById('desktop-scroll-container');
         setScrollItem(renderedScrollItem);
         setCurrentIndex(0);
         setScrollWidth(window.innerWidth);
@@ -95,9 +110,13 @@ export default function DesktopHeroCarousel() {
 
     useEffect(() => {
         resetTimeout();
+        let highlight = 0;
+        if(scrollItem && currentIndex != maxIndex) {
+            highlight = currentIndex;
+        }
         for ( let i = 0; i < carouselItems.length; i++ ) {
-            let currentIndicator = document.getElementById(`${i}`);
-            if( i == currentIndex && currentIndicator) {
+            let currentIndicator = document.getElementById(`desktop-hero-${i}`);
+            if( i == highlight && currentIndicator) {
                 currentIndicator.style.opacity = '1';
             } else if (currentIndicator) {
                 currentIndicator.style.opacity = '0.5';
@@ -114,7 +133,7 @@ export default function DesktopHeroCarousel() {
 
     return (
         <Grid item xs={12} sx={{ display: {xs: 'none', sm: 'none', md: 'flex'}, overflow: 'hidden', height: '89vh' }}>
-            <Grid id='scroll-container' item xs={12} sx={{ position: 'relative', display: 'flex', height: '88vh', overflow: 'hidden', whiteSpace: 'nowrap', scrollbarWidth: 'none', scrollSnapType: 'x mandatory', scrollSnapStop: 'always' }}>
+            <Grid id='desktop-scroll-container' item xs={12} sx={{ position: 'relative', display: 'flex', height: '88vh', overflow: 'hidden', whiteSpace: 'nowrap', scrollbarWidth: 'none', scrollSnapType: 'x mandatory', scrollSnapStop: 'always' }}>
                 {carouselItems.map((item) => 
                     <Box
                         key={item.id}
@@ -175,9 +194,9 @@ export default function DesktopHeroCarousel() {
                 )}
             </Grid>
             <Container maxWidth={false} sx={{ display: 'flex', justifyContent: 'center', position: 'absolute', bottom: '30px' }}>
-                <FiberManualRecordRoundedIcon id='0' onClick={(e) => handleClick(0)} sx={{fontSize: '15px', position: 'relative', zIndex: 3, mx: 1, filter: 'brightness(0) invert(1)', opacity: 0.5, ':hover': { opacity: 1 } }}/>
-                <FiberManualRecordRoundedIcon id='1' onClick={(e) => handleClick(1)} sx={{fontSize: '15px', position: 'relative', zIndex: 3, mx: 1, filter: 'brightness(0) invert(1)', opacity: 0.5, ':hover': { opacity: 1 } }}/>
-                <FiberManualRecordRoundedIcon id='2' onClick={(e) => handleClick(2)} sx={{fontSize: '15px', position: 'relative', zIndex: 3, mx: 1, filter: 'brightness(0) invert(1)', opacity: 0.5, ':hover': { opacity: 1 } }}/>
+                <FiberManualRecordRoundedIcon id='desktop-hero-0' onClick={(e) => handleClick(0)} sx={{fontSize: '15px', position: 'relative', zIndex: 3, mx: 1, filter: 'brightness(0) invert(1)', opacity: 0.5, ':hover': { opacity: 1 } }}/>
+                <FiberManualRecordRoundedIcon id='desktop-hero-1' onClick={(e) => handleClick(1)} sx={{fontSize: '15px', position: 'relative', zIndex: 3, mx: 1, filter: 'brightness(0) invert(1)', opacity: 0.5, ':hover': { opacity: 1 } }}/>
+                <FiberManualRecordRoundedIcon id='desktop-hero-2' onClick={(e) => handleClick(2)} sx={{fontSize: '15px', position: 'relative', zIndex: 3, mx: 1, filter: 'brightness(0) invert(1)', opacity: 0.5, ':hover': { opacity: 1 } }}/>
             </Container>
             <ArrowBackIosNewRoundedIcon onClick={onPrev} sx={{position: 'absolute', top: '50%', zIndex: 3, left: '30px', filter: 'brightness(0) invert(1)', opacity: 0.8, ':hover': { opacity: 1 } }}/>
             <ArrowForwardIosRoundedIcon onClick={onNext} sx={{position: 'absolute', top: '50%', zIndex: 3, right: '30px', filter: 'brightness(0) invert(1)', opacity: 0.8, ':hover': { opacity: 1 } }}/>

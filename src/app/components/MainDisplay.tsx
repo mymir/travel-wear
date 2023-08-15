@@ -18,26 +18,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import ApparelDialog from './ApparelDialog'
 
-interface PhotoItem {
-    id: number;
-    name: string;
-    price: number;
-    onSale: boolean;
-    markdown: number;
-    featured: boolean;
-    colors: string[];
-    primaryUrl: string;    
-    secondaryUrl: string;
-}
+import { Product } from '../productInterface';
 
-export default function MainDisplay({apparel, spacing=2}: {apparel: PhotoItem[], spacing?: number}) {
+export default function MainDisplay({apparel, spacing=2}: {apparel: Product[], spacing?: number}) {
     const [open, setOpen] = useState(false);
-    const [currentItem, setCurrentItem] = useState<PhotoItem>();
+    const [currentItem, setCurrentItem] = useState<Product>();
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   
-    const handleClickOpen = (item: PhotoItem) => {
+    const handleClickOpen = (item: Product) => {
       setOpen(true);
       setCurrentItem(item);
     };
@@ -45,10 +35,6 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: PhotoItem[],
     const handleClose = () => {
         setOpen(false);
     };
-
-    const itemRoute = (name: string) => {
-        return name.toLowerCase().replaceAll(' ', '-');
-    }
     
     return (
         <Grid container item spacing={spacing} xs={12} sm={12} md={10}>
@@ -70,13 +56,13 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: PhotoItem[],
             </Dialog>
             {apparel.map((item) => 
                 <Grid item xs={12} sm={6} md={3} key={item.id}>
-                    {item.featured 
+                    {item.isFeatured 
                     ?
                     <Box
                         sx={{ 
                             position: 'relative',
                             width: '100%',
-                            height: '50vh', 
+                            height: {xs: '130vw', sm: '65vw', md: '28vw'},
                             p: 0,
                             m: 0,
                             bgcolor: 'background.paper', 
@@ -84,10 +70,10 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: PhotoItem[],
                             backgroundPosition: "center",
                             backgroundSize: "cover",
                             backgroundRepeat: "no-repeat",
-                            backgroundImage: `url(${item.primaryUrl})`,
+                            backgroundImage: `url(${item.photos[0]})`,
                             ':hover': {
                                 cursor: 'pointer',
-                                backgroundImage: `url(${item.secondaryUrl})`,
+                                backgroundImage: `url(${item.photos[1]})`,
                             },
                             ':hover .interaction': {
                                 display: 'flex'
@@ -131,7 +117,7 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: PhotoItem[],
                             sx={{ 
                                 position: 'relative',
                                 width: '100%',
-                                height: '50vh', 
+                                height: {xs: '130vw', sm: '65vw', md: '28vw'},
                                 p: 0,
                                 m: 0,
                                 bgcolor: 'background.paper', 
@@ -139,10 +125,10 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: PhotoItem[],
                                 backgroundPosition: "center",
                                 backgroundSize: "cover",
                                 backgroundRepeat: "no-repeat",
-                                backgroundImage: `url(${item.primaryUrl})`,
+                                backgroundImage: `url(${item.photos[0]})`,
                                 ':hover': {
                                     cursor: 'pointer',
-                                    backgroundImage: `url(${item.secondaryUrl})`,
+                                    backgroundImage: `url(${item.photos[1]})`,
                                 },
                                 ':hover .interaction': {
                                     display: 'flex'
@@ -151,7 +137,7 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: PhotoItem[],
                         >
                             <Button
                                 component='a'
-                                href={`/product/${itemRoute(item.name)}`}
+                                href={`/product/${item.id}`}
                                 disableRipple
                                 sx={{ 
                                     position: 'absolute',
@@ -191,16 +177,16 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: PhotoItem[],
                                 ${item.price}
                             </Typography>
                             <Typography variant='body2' sx={{ mx:0.5, display: 'inline-flex', color: 'red' }} >
-                                ${item.price - (item.price/item.markdown)}
+                                ${item.price - (item.price/item.discount)}
                             </Typography>
                         </Box>
                         : <Typography variant='body2' sx={{ color: 'black' }} >${item.price}</Typography>
                         }
-                        {item.colors.map((color, index) =>        
+                        {/* {item.colors.map((color, index) =>        
                             <IconButton key={index} disableRipple sx={{ borderRadius: 5, border: 'grey 2px solid', p: 0, mr: 0.5, ':hover': { border: 'black 2px solid' } }}>
                                 <CircleIcon sx={{ color: {color}, fontSize: '15px' }} />
                             </IconButton>  
-                        )}
+                        )} */}
                     </Box>
                 </Grid>
             )}

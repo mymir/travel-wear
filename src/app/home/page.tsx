@@ -1,3 +1,6 @@
+'use client'
+
+import { useState, useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -10,17 +13,61 @@ import LocalShippingRoundedIcon from '@mui/icons-material/LocalShippingRounded';
 import KeyboardReturnRoundedIcon from '@mui/icons-material/KeyboardReturnRounded';
 import CurrencyExchangeRoundedIcon from '@mui/icons-material/CurrencyExchangeRounded';
 
-import { menBottoms } from '../photos';
 import DesktopHeroCarousel from '../home/DesktopHeroCarousel';
 import MobileHeroCarousel from '../home/MobileHeroCarousel';
 import CollectionGrid from '../home/CollectionGrid';
 
+import { Product, Color } from '../productInterface';
+
+
+const backgroundImageUrl3: string = "https://images.unsplash.com/photo-1610481960145-a5e24e5c94fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80"
+const backgroundImageUrl5: string = "https://images.unsplash.com/photo-1631902112544-2271267abb73?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+
 export default function Home() {
-  const backgroundImageUrl3: string = "https://images.unsplash.com/photo-1542327534-59a1fe8daf73?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEwfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60"
-  // const backgroundImageUrl5: string = "https://images.unsplash.com/photo-1534299898413-786c624f93eb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDZ8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-  const backgroundImageUrl5: string = "https://images.unsplash.com/photo-1514993805013-c428d7f63ad4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEwfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60"
-  
-  const currentPosts = menBottoms.slice(0, 4);
+
+  const [trending, setTrending] = useState<Product[]>([]);  
+  const didFetchRef = useRef(false);
+
+  const tempArray: Product[] = [];
+
+  function mapArray(json: Product)  {
+    const currProduct = {
+        id: json.id, 
+        name: json.name,
+        price: json.price,
+        category: json.category,
+        onSale: json.onSale,
+        discount: json.discount,
+        isNew: json.isNew,
+        isFeatured: json.isFeatured,
+        gender: json.gender,
+        rating: json.rating,
+        sizes: json.sizes,
+        photos: json.photos,
+    }
+    tempArray.push(currProduct);
+  }
+    
+  async function fetchData() {
+    const res = await fetch('http://localhost:8080/travelwear/products/featured');
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch data')
+    }
+
+    const json = await res.json();
+    for(var item of json.slice(0,4)) {
+      mapArray(item);
+    }
+    setTrending(tempArray);
+  }
+
+  useEffect(() => {
+    if(!didFetchRef.current){
+      didFetchRef.current = true;
+      fetchData();
+    }
+  }, []);
 
   return (
     <Grid container spacing={2}>
@@ -93,11 +140,8 @@ export default function Home() {
         </Divider>
       </Grid>
       <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Box sx={{ display: { xs: 'none', sm: 'none', md: 'flex' }, width: '100%', pt: 1, justifyContent: 'center' }}>
-          <MainDisplay apparel={currentPosts} spacing={6} />
-        </Box>
-        <Box sx={{ display: { xs: 'flex', sm: 'flex', md: 'none' }, width: '100%', px: 7, pt: 1, justifyContent: 'center' }}>
-          <MainDisplay apparel={currentPosts} />
+        <Box sx={{ display: 'flex', width: '100%', pt: 1, justifyContent: 'center', px: { xs: 2, sm: 2, md: 0} }}>
+          <MainDisplay apparel={trending} spacing={6} />
         </Box>
       </Grid>
       <Grid item xs={12}>

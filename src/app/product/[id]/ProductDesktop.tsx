@@ -1,14 +1,14 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import Toolbar from '@mui/material/Toolbar';
 
 import CircleIcon from '@mui/icons-material/Circle';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
@@ -17,17 +17,7 @@ import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded
 import { SolidRating } from '../../components/SolidRating';
 import DetailAccordian from '@/app/components/DetailAccordian';
 
-interface PhotoItem {
-    id: number;
-    name: string;
-    price: number;
-    onSale: boolean;
-    markdown: number;
-    featured: boolean;
-    colors: string[];
-    primaryUrl: string;    
-    secondaryUrl: string;
-}
+import { Product } from '@/app/productInterface';
 
 interface Detail {
     id: number;
@@ -53,98 +43,54 @@ const details: Detail[] = [
     },
 ]
 
-const item: PhotoItem = {
-    id: 1,
-    name: 'Grey Graphic T-Shirt',
-    price: 25,
-    onSale: true,
-    markdown: 10,
-    featured: false,
-    colors: ['#575c69', '#edf3ff'],
-    primaryUrl: 'https://images.unsplash.com/photo-1588117305388-c2631a279f82?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60',
-    secondaryUrl: 'https://images.unsplash.com/photo-1588117260148-b47818741c74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=800&q=60'
-}
+export default function ProductDesktop({ productItem, handleClickOpen }: { productItem?: Product, handleClickOpen: Function }) {
+    const [currentImage, setCurrentImage] = useState<String>();
 
-const images: string[] = [
-    'https://images.unsplash.com/photo-1588117305388-c2631a279f82?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1588117260148-b47818741c74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1588117305388-c2631a279f82?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1588117260148-b47818741c74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=800&q=60'
-]
-
-export default function ProductDesktop({ id, handleClickOpen }: { id: string, handleClickOpen: Function }) {
-    const [currentImage, setCurrentImage] = useState<String>(images[0]);
-    const rating: number = 4.5;
+    useEffect(() => {
+        selectPhoto(0);
+    }, []);
 
     const selectPhoto = (elId: number) => {
-        images.forEach((_image, index) => {
-            let elButton: HTMLElement | null = document.getElementById(index + 'Button');
+        productItem?.photos.forEach((_photo, index) => {
+            let elButton: HTMLElement | null = document.getElementById(index + 'desktop-button');
             if (index == elId && elButton) {
                 elButton.style.opacity = '1';
             } else if (elButton) {
                 elButton.style.opacity = '0.5';
             }
         })
-        if(images[elId]) {
-            setCurrentImage(images[elId]);
+        if(productItem?.photos[elId]) {
+            setCurrentImage(productItem?.photos[elId]);
         }
+        console.log(productItem);
     }
 
     return (
-        <Container maxWidth={false} sx={{width: '100%', height: '100%', display: 'flex', m: 2}}>
-            <Toolbar />
+        <Container maxWidth={false} sx={{width: '100', height: '100%', display: 'flex', my: 2, p: 0}}>
                 <Box sx={{ display: 'block', height: '100vh', width: '100px', mr: 1, overflow: 'scroll' }}>
-                    {images.map((image, index) => 
-                    <>
-                        {index == 0 
-                        ?
-                            <Button
-                                key={index}
-                                id={index + 'Button'}
-                                onClick={(e) => selectPhoto(index)}
-                                disableRipple
-                                sx={{         
-                                    position: 'relative',                                
-                                    height: '150px', 
-                                    width: '100px',
-                                    mb: 1,
-                                    opacity: 1,
-                                    borderRadius: 0,
-                                    backgroundPosition: "center", 
-                                    backgroundSize: "cover", 
-                                    backgroundRepeat: "no-repeat", 
-                                    backgroundImage: `url(${image})`,
-                                    ':active, :hover': {
-                                        opacity: 1
-                                    }
-                                }}
-                            >
-                            </Button>
-                        :
-                            <Button
-                                key={index}
-                                id={index + 'Button'}
-                                onClick={(e) => selectPhoto(index)}
-                                disableRipple
-                                sx={{         
-                                    position: 'relative',                                
-                                    height: '150px', 
-                                    width: '100px',
-                                    mb: 1,
-                                    opacity: 0.5,
-                                    borderRadius: 0,
-                                    backgroundPosition: "center", 
-                                    backgroundSize: "cover", 
-                                    backgroundRepeat: "no-repeat", 
-                                    backgroundImage: `url(${image})`,
-                                    ':active, :hover': {
-                                        opacity: 1
-                                    }
-                                }}
-                            >
-                            </Button>
-                        }
-                    </>
+                    {productItem?.photos.map((image, index) => 
+                    <Button
+                            key={index}
+                            id={index + 'desktop-button'}
+                            onClick={(e) => selectPhoto(index)}
+                            disableRipple
+                            sx={{         
+                                position: 'relative',                                
+                                height: '150px', 
+                                width: '100px',
+                                mb: 1,
+                                opacity: 1,
+                                borderRadius: 0,
+                                backgroundPosition: "center", 
+                                backgroundSize: "cover", 
+                                backgroundRepeat: "no-repeat", 
+                                backgroundImage: `url(${image})`,
+                                ':active, :hover': {
+                                    opacity: 1
+                                }
+                            }}
+                        >
+                    </Button>
                     )}
                 </Box>
                 <Box
@@ -159,7 +105,7 @@ export default function ProductDesktop({ id, handleClickOpen }: { id: string, ha
                     }}
                 >
                     <Button
-                        onClick={(e) => handleClickOpen(item)}
+                        onClick={(e) => handleClickOpen(productItem)}
                         disableRipple
                         sx={{ 
                             position: 'relative',
@@ -178,13 +124,13 @@ export default function ProductDesktop({ id, handleClickOpen }: { id: string, ha
                         }}
                     />
                 </Box>
-                <Box sx={{ ml: 10 }}>
+                <Box sx={{ ml: 10, width: '35vw' }}>
                     <Typography 
                         variant='h5' sx={{ fontWeight: 'bold', p:0, mb:1 }}>
-                        {item?.name}
+                        {productItem?.name}
                     </Typography>
                     <Box sx={{ display: 'flex' }}>
-                        <SolidRating startValue={rating} />
+                        <SolidRating startValue={productItem?.rating} />
                         <Typography 
                             variant='body2'
                             component='a'
@@ -194,16 +140,20 @@ export default function ProductDesktop({ id, handleClickOpen }: { id: string, ha
                         >
                             (1,245)
                         </Typography>
+                    </Box>
+                    {productItem?.onSale
+                        ? 
+                        <Box sx={{display: 'flex', my: 2, alignItems: 'center'}}>
+                            <Typography variant='h6' sx={{ mx:1, display: 'inline-flex', color: 'primary.main' }} >
+                                ${productItem?.price - (productItem?.price/productItem?.discount)}
+                            </Typography>
+                            <Chip label={`save ${productItem?.discount}%`} variant="filled" size="small" sx={{ display: 'inline-flex', fontWeight: 'bold', color: 'white', bgcolor: 'primary.main' }} />
+                            <Typography variant='h6' sx={{ mx:1, display: 'inline-flex', color: 'grey', textDecoration: 'line-through' }} >
+                                ${productItem?.price}
+                            </Typography>
                         </Box>
-                    <Typography 
-                        variant='h6'
-                        sx={{  
-                            my: 2,
-                            display: 'block',
-                        }}
-                    >
-                        ${item?.price}.00
-                    </Typography>
+                        : <Typography variant='h6' sx={{ color: 'black', my: 2, display: 'block', }} >${productItem?.price}</Typography>
+                    }
                     <Divider/>
                     <Typography 
                         variant='body1'
@@ -216,11 +166,11 @@ export default function ProductDesktop({ id, handleClickOpen }: { id: string, ha
                     >
                         Color:
                     </Typography>
-                    {item?.colors.map((color, index) =>        
+                    {/* {item?.colors.map((color, index) =>        
                         <IconButton key={index} disableRipple sx={{ borderRadius: 5, border: 'grey 2px solid', p: 0, mr: 0.5, ':hover': { border: 'black 2px solid' } }}>
                             <CircleIcon sx={{ color: {color}, fontSize: '15px' }} />
                         </IconButton>  
-                    )}
+                    )} */}
                     <Typography 
                         variant='body1'
                         sx={{  
@@ -254,7 +204,6 @@ export default function ProductDesktop({ id, handleClickOpen }: { id: string, ha
                     </Typography>
                     <DetailAccordian itemDetails={details}/>
                 </Box>
-            <Toolbar />
         </Container>
     );
 }

@@ -22,7 +22,7 @@ export default function NavLinks() {
                     href={item.route}
                     disableRipple
                     sx={{ 
-                    color: '#ffeb87', 
+                    color: 'black',
                     mx:2,
                     fontWeight: 'bold',
                     textDecoration: 'white underline 2px',
@@ -48,7 +48,7 @@ export default function NavLinks() {
                         href={item.route}
                         disableRipple
                         sx={{ 
-                        color: '#ffeb87', 
+                        color: 'black',
                         mx:2,
                         fontWeight: 'bold',
                         ':hover': {

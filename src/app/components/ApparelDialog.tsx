@@ -12,23 +12,9 @@ import CircleIcon from '@mui/icons-material/Circle';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
-interface PhotoItem {
-    id: number;
-    name: string;
-    price: number;
-    onSale: boolean;
-    markdown: number;
-    featured: boolean;
-    colors: string[];
-    primaryUrl: string;    
-    secondaryUrl: string;
-}
+import { Product } from '../productInterface';
 
-const ApparelDialog = ({item}: {item: PhotoItem | undefined}) => {
-    const itemRoute = (name: string | undefined) => {
-        return name?.toLowerCase().replaceAll(' ', '-');
-    }
-    
+const ApparelDialog = ({item}: {item: Product | undefined}) => {
     return (
         <Fragment>
             <DialogContent dividers={true}>
@@ -44,7 +30,7 @@ const ApparelDialog = ({item}: {item: PhotoItem | undefined}) => {
                                 backgroundPosition: "center", 
                                 backgroundSize: "cover", 
                                 backgroundRepeat: "no-repeat", 
-                                backgroundImage: `url(${item?.primaryUrl})`,
+                                backgroundImage: `url(${item?.photos[0]})`,
                                 ':hover .interaction': {
                                     display: 'flex'                              
                                 }
@@ -82,13 +68,14 @@ const ApparelDialog = ({item}: {item: PhotoItem | undefined}) => {
                                 display: 'block',
                             }}
                         >
-                            Color: {item?.colors[0]}
+                            {/* Color: {item?.colors[0]} */}
+                            Color:
                         </Typography>
-                        {item?.colors.map((color, index) =>        
+                        {/* {item?.colors.map((color, index) =>        
                             <IconButton key={index} disableRipple sx={{ borderRadius: 5, border: 'grey 2px solid', p: 0, mr: 0.5, ':hover': { border: 'black 2px solid' } }}>
                                 <CircleIcon sx={{ color: {color}, fontSize: '15px' }} />
                             </IconButton>  
-                        )}
+                        )} */}
                         <Typography 
                             variant='h6'
                             sx={{  
@@ -105,7 +92,7 @@ const ApparelDialog = ({item}: {item: PhotoItem | undefined}) => {
                         <Button variant='contained' disableElevation sx={{ width: '100%', fontWeight: 'bold', py: 2, color: 'white' }}>
                             Add To Cart
                         </Button>
-                        <Button component='a' href={`/product/${itemRoute(item?.name)}`} variant='contained' disableElevation color='secondary' sx={{ width: '100%', fontWeight: 'bold', py: 2, color: 'white' }}>
+                        <Button component='a' href={`/product/${item?.id}`} variant='contained' disableElevation color='secondary' sx={{ width: '100%', fontWeight: 'bold', py: 2, color: 'white' }}>
                             View Details
                         </Button>
                     </Grid>

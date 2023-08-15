@@ -44,8 +44,7 @@ export default function Sidebar() {
                 ))
 
                 }
-            <Box sx={{ position: 'sticky', top: '1rem', display: 'block' }}>
-                <Toolbar />
+            <Box sx={{ position: 'sticky', top: '4rem', display: 'block' }}>
                 <Typography variant='body1' sx={{ pl: 2, py: 2, fontWeight: 'bold' }}>Filters:</Typography>
                 <FilterAccordian filterItems={filters} />
             </Box>

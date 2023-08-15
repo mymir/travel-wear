@@ -1,56 +1,87 @@
 'use client'
 
-import { useState, Fragment } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeRoundedIcon from '@mui/icons-material/NavigateBeforeRounded';
+
 import ProductDesktop from './ProductDesktop';
 import ProductMobile from './ProductMobile';
 
-interface PhotoItem {
-    id: number;
-    name: string;
-    price: number;
-    onSale: boolean;
-    markdown: number;
-    featured: boolean;
-    colors: string[];
-    primaryUrl: string;    
-    secondaryUrl: string;
-}
-
-const item: PhotoItem = {
-    id: 1,
-    name: 'Grey Shirt',
-    price: 25,
-    onSale: true,
-    markdown: 10,
-    featured: false,
-    colors: ['#575c69', '#edf3ff'],
-    primaryUrl: 'https://images.unsplash.com/photo-1588117305388-c2631a279f82?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60',
-    secondaryUrl: 'https://images.unsplash.com/photo-1588117260148-b47818741c74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=800&q=60'
-}
-
-const images: string[] = [
-    'https://images.unsplash.com/photo-1588117305388-c2631a279f82?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1588117260148-b47818741c74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1588117305388-c2631a279f82?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1588117260148-b47818741c74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=800&q=60'
-]
+import { Product } from '@/app/productInterface';
 
 export default function Page({ params }: { params: { id: string } }) {
+    const [isLoading, setIsLoading] = useState(true);
+    const [productItem, setProductItem] = useState<Product>();
+    const [currentImage, setCurrentImage] = useState<String>();
+    const didFetchRef = useRef(false);
+
+    function mapItem(json: Product)  {
+        const currProduct = {
+            id: json.id, 
+            name: json.name,
+            price: json.price,
+            category: json.category,
+            onSale: json.onSale,
+            discount: json.discount,
+            isNew: json.isNew,
+            isFeatured: json.isFeatured,
+            gender: json.gender,
+            rating: json.rating,
+            sizes: json.sizes,
+            photos: json.photos,
+        }
+        return currProduct;
+    }
+    
+    async function fetchData() {
+        const res = await fetch('http://localhost:8080/travelwear/product/' + params.id).then(async(res) => {
+            if (!res.ok) {
+                throw new Error('Failed to fetch data')
+            }
+        
+            const json = await res.json();
+            const newProduct: Product = mapItem(json)
+            setProductItem(newProduct);
+            setCurrentImage(newProduct.photos[0]);
+            setIsLoading(false)
+        });
+    }
+
+    useEffect(() => {
+        if(!didFetchRef.current){
+        didFetchRef.current = true;
+        fetchData();
+        }
+    }, []);
+
+
+
+
+
+
+
+
+
+
+
     const [open, setOpen] = useState(false);
-    const [currentItem, setCurrentItem] = useState<PhotoItem>();
+    const [currentItem, setCurrentItem] = useState<Product>();
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    const handleClickOpen = (item: PhotoItem) => {
+    const handleClickOpen = (item: Product) => {
         setCurrentItem(item);
         setOpen(true);
       };
@@ -61,6 +92,7 @@ export default function Page({ params }: { params: { id: string } }) {
         console.log(el);
         el?.scrollIntoView({ behavior: 'smooth' });
     }
+
     return (
         <Fragment>
             <Dialog                
@@ -73,7 +105,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 sx={{ maxwidth: '800px' }}    
             >
                 <Box sx={{ position: 'static', width: '100vw' }}>
-                {images.map((image, index) => 
+                {currentItem?.photos.map((image, index) => 
                     <div id={index.toString()}>
                     <Box
                         key={index}
@@ -103,7 +135,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     </IconButton>
                 </Box>
                 <Box sx={{ display: { xs: 'none', sm: 'none', md: 'flex' }, position: 'fixed', top: '10px', flexDirection: 'column', my: 2, mx: 4, bgcolor: 'rgba(255,255,255,0.7)', borderRadius: 1, p: 2 }}>
-                    {images.map((image, index) =>                         
+                    {currentItem?.photos.map((image, index) =>                         
                         <Button
                             key={index}
                             disableRipple
@@ -127,11 +159,35 @@ export default function Page({ params }: { params: { id: string } }) {
                     )}
                 </Box>
             </Dialog>
-            <Box sx={{ display: {xs: 'none', sm: 'none', md: 'flex'} }}>
-                <ProductDesktop id={params.id} handleClickOpen={handleClickOpen}/>
+            <Box sx={{ py: 2, px: 2, display: {xs: 'none', sm: 'none', md: 'block'} }}>
+                <Box sx={{display: 'flex'}}>
+                    <Breadcrumbs aria-label="breadcrumb" separator={<NavigateNextIcon fontSize="small" />} color="black" sx={{ px: 3, py: 1 }}>
+                        <Link underline="hover" color="black" href="/home" variant='body2'>
+                            TravelWear
+                        </Link>
+                        <Link underline="hover" color="black" href="/women" variant='body2'>
+                            women
+                        </Link>
+                        <Link underline="hover" color="black" href="/women/tops" variant='body2'>
+                            tops
+                        </Link>
+                        <Typography color="rgba(0,0,0,0.5)" variant='body2'>{productItem?.name}</Typography>
+                    </Breadcrumbs>
+                    <Link underline="hover" color="black" href="/women/tops" variant='body2' sx={{ display: 'flex', flexGrow: 1, px: 2, py: 1, justifyContent: 'end', alignItems: 'center' }}>
+                        <NavigateBeforeRoundedIcon fontSize="small" sx={{ mr: 1 }}/> previous
+                    </Link>
+                    <Link underline="hover" color="black" href="/women/tops" variant='body2' sx={{ display: 'flex', px: 2, py: 1, alignItems: 'center' }}>
+                            next <NavigateNextIcon fontSize="small" sx={{ ml: 1 }}/>
+                    </Link>
+                </Box>
+                {!isLoading &&
+                    <ProductDesktop productItem={productItem} handleClickOpen={handleClickOpen}/>
+                }                
             </Box>
             <Box sx={{ display: {xs: 'flex', sm: 'flex', md: 'none'} }}>
-                <ProductMobile id={params.id} handleClickOpen={handleClickOpen}/>
+                {!isLoading &&
+                    <ProductMobile productItem={productItem} handleClickOpen={handleClickOpen}/>
+                }   
             </Box>
         </Fragment>
     );
