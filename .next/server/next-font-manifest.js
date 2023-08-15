@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST="{\"pages\":{},\"app\":{\"/Users/rafael/Documents/Programming/travel-wear/travel-wear/src/app/layout\":[\"static/media/2aaf0723e720e8b9-s.p.woff2\"]},\"appUsingSizeAdjust\":true,\"pagesUsingSizeAdjust\":false}"
