@@ -1,0 +1,140 @@
+{
+  "_embedded" : {
+    "products" : [ {
+      "name" : "Grey Graphic T-Shirt",
+      "price" : 30.0,
+      "category" : "shirt",
+      "onSale" : false,
+      "discount" : 0,
+      "isNew" : false,
+      "isFeatured" : false,
+      "gender" : "female",
+      "rating" : 4.5,
+      "colors" : {
+        "Grey" : "#f2d5d5"
+      },
+      "sizes" : {
+        "xl" : 2,
+        "md" : 0,
+        "sm" : 1,
+        "xs" : 2,
+        "lg" : 4,
+        "xxl" : 6
+      },
+      "photos": [
+          "https://images.unsplash.com/photo-1588117305388-c2631a279f82?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60",
+          "https://images.unsplash.com/photo-1588117260148-b47818741c74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+      ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/api/products/1"
+        },
+        "product" : {
+          "href" : "http://localhost:8080/api/products/1"
+        }
+      }
+    },
+    {
+        "name": "Pink Tied Crop Top",
+        "price": 15.0,
+        "category": "shirt",
+        "onSale": false,
+        "discount": 0,
+        "isNew": false,
+        "isFeatured": true,
+        "gender": "female",
+        "rating": 4.0,
+        "colors": {
+            "pink": "#ff4f98"
+        },
+        "sizes": {
+            "xl": 5,
+            "md": 2,
+            "sm": 0,
+            "xs": 4,
+            "lg": 0,
+            "xxl": 3
+        },
+        "photos": [
+            "https://images.unsplash.com/photo-1585497115342-e129d5e533ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
+            "https://images.unsplash.com/photo-1584720223124-466ff369e7c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        ],
+        "_links": {
+            "self": {
+                "href": "http://localhost:8080/api/products/2"
+            },
+            "product": {
+                "href": "http://localhost:8080/api/products/2"
+            }
+        }
+    },
+    {
+        "name": "Tan Graphic T-Shirt",
+        "price": 25.0,
+        "category": "shirt",
+        "onSale": false,
+        "discount": 0,
+        "isNew": false,
+        "isFeatured": true,
+        "gender": "female",
+        "rating": 3.0,
+        "colors": {
+            "tan": "#f2d5d5"
+        },
+        "sizes": {
+            "xl": 5,
+            "md": 2,
+            "sm": 0,
+            "xs": 4,
+            "lg": 0,
+            "xxl": 3
+        },
+        "photos": [
+            "https://images.unsplash.com/photo-1598211686290-a8ef209d87c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDN8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=800&q=60",
+            "https://images.unsplash.com/photo-1598211664451-1458e4a3e279?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+        ],
+        "_links": {
+            "self": {
+                "href": "http://localhost:8080/api/products/2"
+            },
+            "product": {
+                "href": "http://localhost:8080/api/products/2"
+            }
+        }
+    },
+    {
+        "name": "Yellow Heavy Puffer Jacket",
+        "price": 60.0,
+        "category": "jacket",
+        "onSale": false,
+        "discount": 0,
+        "isNew": false,
+        "isFeatured": true,
+        "gender": "female",
+        "rating": 3.5,
+        "colors": {
+            "yellow": "#fcba03"
+        },
+        "sizes": {
+            "xl": 5,
+            "md": 2,
+            "sm": 0,
+            "xs": 4,
+            "lg": 0,
+            "xxl": 3
+        },
+        "photos": [
+            "https://images.unsplash.com/photo-1631902112544-2271267abb73?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
+            "https://images.unsplash.com/photo-1538329972958-465d6d2144ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+        ],
+        "_links": {
+            "self": {
+                "href": "http://localhost:8080/api/products/2"
+            },
+            "product": {
+                "href": "http://localhost:8080/api/products/2"
+            }
+        }
+    }
+]
+}}
