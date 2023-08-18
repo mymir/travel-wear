@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react';
+import { useRouter } from 'next/navigation'
 
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -30,10 +31,17 @@ const navIcons = [
 ]
 
 export default function NavIcons() {
+    const router = useRouter()
+
     return (
         <Box sx={{ display: 'flex' }}>
             {navIcons.map((item) => (
-              <IconButton key={item.id} aria-label={item.label} sx={{ color: 'black', px: { xs: 0.5, sm: 1, md: 1 } }} component='a' href={item.route}>
+              <IconButton 
+                key={item.id} 
+                aria-label={item.label} 
+                sx={{ color: 'black', px: { xs: 0.5, sm: 1, md: 1 } }} 
+                onClick={() => router.push(item.route)}
+              >
                 {item.icon}
               </IconButton>
             ))}

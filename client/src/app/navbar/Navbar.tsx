@@ -1,4 +1,8 @@
+'use client'
+
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,15 +14,16 @@ import NavDrawer from './NavDrawer';
 
 
 export default function DrawerAppBar() {
+  const router = useRouter();
+
   return (
     <AppBar component="nav" position="sticky" sx={{ zIndex: 4, boxShadow: 'none', bgcolor: '#fdfdfd', color: 'black', borderBlock: '1px solid rgba(0,0,0,0.2)', px: 2 }}>
       <Toolbar sx={{ minHeight: 0 }}>
         <NavDrawer />
         <Button
           disableRipple  
-          component="a"
+          onClick={() => router.push('/home')}
           size='large'
-          href='/home'
           sx={{ 
             display: { xs: 'none', sm: 'none', md: 'block' }, 
             color: 'black',

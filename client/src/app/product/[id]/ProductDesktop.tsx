@@ -43,7 +43,7 @@ const details: Detail[] = [
     },
 ]
 
-export default function ProductDesktop({ productItem, handleClickOpen }: { productItem?: Product, handleClickOpen: Function }) {
+export default function ProductDesktop({ productItem, handleClickOpen, updateCart }: { productItem?: Product, handleClickOpen: Function, updateCart: Function  }) {
     const [currentImage, setCurrentImage] = useState<String>();
 
     useEffect(() => {
@@ -62,7 +62,7 @@ export default function ProductDesktop({ productItem, handleClickOpen }: { produ
         if(productItem?.photos[elId]) {
             setCurrentImage(productItem?.photos[elId]);
         }
-        console.log(productItem);
+        // console.log(productItem);
     }
 
     return (
@@ -119,7 +119,7 @@ export default function ProductDesktop({ productItem, handleClickOpen }: { produ
                             bgcolor: 'transparent', 
                             ':hover': {
                                 bgcolor: 'transparent', 
-                                cursor: 'zoom-in',
+                                cursor: `url('/zoom_in_black_24dp.svg'), pointer`,
                             }
                         }}
                     />
@@ -188,7 +188,7 @@ export default function ProductDesktop({ productItem, handleClickOpen }: { produ
                         </Button>  
                     )}
                     <Box sx={{ display: 'flex', mt: 4, mb: 2 }}>
-                        <Button variant='contained' color='secondary' disableElevation sx={{ display: 'flex', flexGrow: 1, fontWeight: 'bold', py: 2, color: 'white' }}>
+                        <Button onClick={() => updateCart(productItem)} variant='contained' color='secondary' disableElevation sx={{ display: 'flex', flexGrow: 1, fontWeight: 'bold', py: 2, color: 'white' }}>
                             Add To Cart
                         </Button>
                         <Button variant='contained' disableElevation sx={{ display: 'flex', fontWeight: 'bold', color: 'white', minWidth: 0, p: 2, ml: 1}}>

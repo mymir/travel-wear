@@ -1,5 +1,5 @@
 'use client'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -8,6 +8,7 @@ import  { navLinks } from '../links'
 
 export default function NavLinks() {
     const pathname = usePathname()
+    const router = useRouter()
 
     return (
         <Box sx={{ flexGrow: 1, justifyContent: 'center', display: { xs: 'none', sm: 'none', md: 'flex' } }}>
@@ -43,9 +44,8 @@ export default function NavLinks() {
                     return (
                         <Button 
                         key={item.id} 
-                        aria-label={item.label}               
-                        component='a' 
-                        href={item.route}
+                        aria-label={item.label}  
+                        onClick={() => router.push(item.route)}
                         disableRipple
                         sx={{ 
                         color: 'black',

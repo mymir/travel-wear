@@ -18,12 +18,32 @@ import ProductDesktop from './ProductDesktop';
 import ProductMobile from './ProductMobile';
 
 import { Product } from '../../productInterface';
+import { useAuthContext } from '../../../context/store';
 
 export default function Page({ params }: { params: { id: string } }) {
     const [isLoading, setIsLoading] = useState(true);
     const [productItem, setProductItem] = useState<Product>();
     const [currentImage, setCurrentImage] = useState<String>();
     const didFetchRef = useRef(false);
+
+    const {uid} = useAuthContext();
+    
+    async function updateCart(product?: Product) {
+        console.log(product);
+        const res = await fetch(`http://localhost:8080/travelwear/shoppers/${uid}/cart`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(product)
+        });
+        
+        if (!res.ok) {
+          throw new Error('Failed to add to cart');
+        }
+        
+        const json = await res.json();
+    }
 
     function mapItem(json: Product)  {
         const currProduct = {
@@ -63,16 +83,6 @@ export default function Page({ params }: { params: { id: string } }) {
         fetchData();
         }
     }, []);
-
-
-
-
-
-
-
-
-
-
 
     const [open, setOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState<Product>();
@@ -122,7 +132,7 @@ export default function Page({ params }: { params: { id: string } }) {
                             backgroundRepeat: "no-repeat", 
                             backgroundImage: `url(${image})`,
                             ':hover': {
-                                cursor: 'zoom-out',
+                                cursor: `url('/zoom_out_black_24dp.svg'), pointer`,
                             }
                         }}
                     />
@@ -181,12 +191,12 @@ export default function Page({ params }: { params: { id: string } }) {
                     </Link>
                 </Box>
                 {!isLoading &&
-                    <ProductDesktop productItem={productItem} handleClickOpen={handleClickOpen}/>
+                    <ProductDesktop productItem={productItem} handleClickOpen={handleClickOpen} updateCart={updateCart}/>
                 }                
             </Box>
             <Box sx={{ display: {xs: 'flex', sm: 'flex', md: 'none'} }}>
                 {!isLoading &&
-                    <ProductMobile productItem={productItem} handleClickOpen={handleClickOpen}/>
+                    <ProductMobile productItem={productItem} handleClickOpen={handleClickOpen} updateCart={updateCart}/>
                 }   
             </Box>
         </Fragment>

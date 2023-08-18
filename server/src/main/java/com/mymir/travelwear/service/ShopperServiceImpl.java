@@ -1,11 +1,13 @@
 package com.mymir.travelwear.service;
 
 import java.util.List;
+// import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.mymir.travelwear.entity.Product;
 import com.mymir.travelwear.entity.Shopper;
 import com.mymir.travelwear.repository.ShopperRepository;
 
@@ -46,6 +48,35 @@ public class ShopperServiceImpl implements ShopperService {
         // if (Objects.nonNull(shopper.getShopperCode()) && !"".equalsIgnoreCase(shopper.getShopperCode())) {
         //     prodDB.setShopperCode(shopper.getShopperCode());
         // }
+ 
+        return shopperRepository.save(prodDB);
+    }
+
+    @Override
+    public Shopper addToShopperCart(Product product, Long shopperId) {
+        Shopper prodDB = shopperRepository.findById(shopperId).get();
+ 
+        // if (Objects.nonNull(shopper.getCart())) {
+        //     prodDB.setCart(shopper.getCart());
+        // }
+        prodDB.addToCart(product);
+ 
+        // if (Objects.nonNull(shopper.getShopperAddress()) && !"".equalsIgnoreCase(shopper.getShopperAddress())) {
+        //     prodDB.setShopperAddress(shopper.getShopperAddress());
+        // }
+ 
+        // if (Objects.nonNull(shopper.getShopperCode()) && !"".equalsIgnoreCase(shopper.getShopperCode())) {
+        //     prodDB.setShopperCode(shopper.getShopperCode());
+        // }
+ 
+        return shopperRepository.save(prodDB);
+    }
+
+    @Override
+    public Shopper removeFromShopperCart(Product product, Long shopperId) {
+        Shopper prodDB = shopperRepository.findById(shopperId).get();
+ 
+        prodDB.removeFromCart(product);
  
         return shopperRepository.save(prodDB);
     }

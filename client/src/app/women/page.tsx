@@ -43,7 +43,6 @@ export default function Women() {
 
     const json = await res.json();
     for(var item of json) {
-      console.log(item);
       mapArray(item);
     }
     setApparel(tempArray);

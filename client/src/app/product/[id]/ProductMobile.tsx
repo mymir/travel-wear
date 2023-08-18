@@ -39,7 +39,7 @@ const details: Detail[] = [
     },
 ]
 
-export default function ProductMobile({ productItem, handleClickOpen }: { productItem?: Product, handleClickOpen: Function }) {
+export default function ProductMobile({ productItem, handleClickOpen, updateCart }: { productItem?: Product, handleClickOpen: Function, updateCart: Function }) {
     const [scrollWidth, setScrollWidth] = useState(0);
     const [scrollItem, setScrollItem] = useState< HTMLElement| null >(null);
 
@@ -210,7 +210,7 @@ export default function ProductMobile({ productItem, handleClickOpen }: { produc
                             {size.size}
                         </Button>  
                     )}
-                    <Button variant='contained' color='secondary' disableElevation sx={{ width: '100%', fontWeight: 'bold', py: 2, mt: 4, color: 'white' }}>
+                    <Button onClick={() => updateCart(productItem)} variant='contained' color='secondary' disableElevation sx={{ width: '100%', fontWeight: 'bold', py: 2, mt: 4, color: 'white' }}>
                         Add To Cart
                     </Button>
                     <Button variant='contained' disableElevation sx={{ width: '100%', fontWeight: 'bold', color: 'white', py: 2, mt: 1 }}>
