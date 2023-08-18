@@ -9,6 +9,7 @@ import Navbar from './navbar/Navbar'
 import ThemeRegistry from './components/ThemeRegistry';
 import Footer from './components/Footer'
 
+import { AuthContextProvider } from '../context/store';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,14 +26,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeRegistry>
-          <Box>
-            <Banner />
-            <Navbar />            
-            {children} 
-            <Footer />
-          </Box>
-        </ThemeRegistry>
+        <AuthContextProvider>
+          <ThemeRegistry>
+            <Box>
+              <Banner />
+              <Navbar />            
+              {children} 
+              <Footer />
+            </Box>
+          </ThemeRegistry>
+        </AuthContextProvider>
       </body>
     </html>
   )

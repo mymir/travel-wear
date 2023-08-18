@@ -19,15 +19,28 @@ import DialogActions from '@mui/material/DialogActions';
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
+import { useAuthContext } from '../../context/store';
 
 export default function LoginForm() {
     const [open, setOpen] = useState(false);
     const router = useRouter()
+    const {uid, setUid, username, setUsername, loggedIn, setLoggedIn} = useAuthContext();
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        await fetch('http://localhost:8080/travelwear/shoppers/1').then((res) =>
+            {
+                res.json().then((json) =>
+                    {
+                        setUsername(json.username);
+                        setUid(Number(json.id));
+                        setLoggedIn(true);
+                    }
+                )
+            }
+        );
         setOpen(true);
     }
 

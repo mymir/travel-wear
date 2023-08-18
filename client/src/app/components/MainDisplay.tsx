@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { useRouter } from 'next/navigation'
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -21,6 +22,8 @@ import ApparelDialog from './ApparelDialog'
 import { Product } from '../productInterface';
 
 export default function MainDisplay({apparel, spacing=2}: {apparel: Product[], spacing?: number}) {
+    const router = useRouter()
+
     const [open, setOpen] = useState(false);
     const [currentItem, setCurrentItem] = useState<Product>();
 
@@ -35,6 +38,15 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: Product[], s
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleLike = (elId: String) => {
+        const inactive = document.getElementById(`${elId}-inactive`);
+        const active = document.getElementById(`${elId}-active`);
+        if(inactive && active) {
+            console.log('active:' + active)
+            active.style.opacity = Math.abs(Number(active.style.opacity) - 1).toString();
+        }
+    }
     
     return (
         <Grid container item spacing={spacing} xs={12} sm={12} md={10}>
@@ -81,8 +93,7 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: Product[], s
                         }}
                     >
                         <Button
-                            component='a'
-                            href={`/product/${item.id}`}
+                            onClick={() => router.push(`/product/${item.id}`)}
                             disableRipple
                             sx={{ 
                                 position: 'absolute',
@@ -100,9 +111,9 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: Product[], s
                         />
                         <Box className="interaction" sx={{ display: 'none', height: '100%', width: '100%', flexDirection: 'column'}}>
                             <Box sx={{ position: 'relative', display: 'flex', alignItems: 'end', justifyContent: 'end' }}>
-                                <IconButton disableRipple sx={{ zIndex: 2, m: 1, bgcolor: 'rgba(255,255,255,0.7)' }}>
-                                    <FavoriteBorderRoundedIcon sx={{ position: 'absolute', opacity: 1, ':hover': { opacity: 0 } }} />
-                                    <FavoriteRoundedIcon sx={{ color: 'primary.main', position: 'relative', opacity: 0, ':hover': { opacity: 1 } }} />
+                                <IconButton onMouseDown={(e) => handleLike(`${item.id}-like`)} disableRipple sx={{ zIndex: 2, m: 1, bgcolor: 'rgba(255,255,255,0.7)', ':active .like-active': { scale: '1.1', transition: '0.2s' } }}>
+                                    <FavoriteBorderRoundedIcon id={`${item.id}-like-inactive`} sx={{ position: 'absolute', opacity: 1 }} />
+                                    <FavoriteRoundedIcon id={`${item.id}-like-active`} className='like-active' sx={{ color: 'primary.main', position: 'relative', opacity: 0}} />
                                 </IconButton>
                             </Box>
                             <Box sx={{ position: 'relative', display: 'flex', flexGrow: 1, alignItems: 'flex-end', justifyContent: 'center', pb: 2 }}>
@@ -136,8 +147,7 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: Product[], s
                             }}
                         >
                             <Button
-                                component='a'
-                                href={`/product/${item.id}`}
+                                onClick={() => router.push(`/product/${item.id}`)}
                                 disableRipple
                                 sx={{ 
                                     position: 'absolute',
@@ -155,9 +165,9 @@ export default function MainDisplay({apparel, spacing=2}: {apparel: Product[], s
                             />
                             <Box className="interaction" sx={{ display: 'none', height: '100%', width: '100%', flexDirection: 'column'}}>
                                 <Box sx={{ position: 'relative', display: 'flex', alignItems: 'end', justifyContent: 'end' }}>
-                                    <IconButton disableRipple sx={{ zIndex: 2, m: 1, bgcolor: 'rgba(255,255,255,0.7)' }}>
-                                        <FavoriteBorderRoundedIcon sx={{ position: 'absolute', opacity: 1, ':hover': { opacity: 0 } }} />
-                                        <FavoriteRoundedIcon sx={{ color: 'primary.main', position: 'relative', opacity: 0, ':hover': { opacity: 1 } }} />
+                                    <IconButton onMouseDown={(e) => handleLike(`${item.id}-like`)} disableRipple sx={{ zIndex: 2, m: 1, bgcolor: 'rgba(255,255,255,0.7)', ':active .like-active': { scale: '1.1', transition: '0.2s' } }}>
+                                        <FavoriteBorderRoundedIcon id={`${item.id}-like-inactive`} sx={{ position: 'absolute', opacity: 1 }} />
+                                        <FavoriteRoundedIcon id={`${item.id}-like-active`} className='like-active' sx={{ color: 'primary.main', position: 'relative', opacity: 0}} />
                                     </IconButton>
                                 </Box>
                                 <Box sx={{ position: 'relative', display: 'flex', flexGrow: 1, alignItems: 'flex-end', justifyContent: 'center', pb: 2 }}>

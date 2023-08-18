@@ -95,6 +95,14 @@ public class Shopper {
         this.cart = cart;
     }
 
+    public void addToCart(Product product) {
+        this.cart.add(product);
+    }
+
+    public void removeFromCart(Product product) {
+        this.cart.remove(product);
+    }
+
     public List<Product> getFavorites() {
         return favorites;
     }

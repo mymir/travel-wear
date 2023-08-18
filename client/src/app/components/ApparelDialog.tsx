@@ -1,6 +1,8 @@
 'use client'
 
 import { Fragment } from 'react';
+import { useRouter } from 'next/navigation'
+
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -13,8 +15,28 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
 import { Product } from '../productInterface';
+import { useAuthContext } from '../../context/store';
 
 const ApparelDialog = ({item}: {item: Product | undefined}) => {
+    const {uid} = useAuthContext();
+    const router = useRouter()
+    
+    async function updateCart(product?: Product) {
+        const res = await fetch(`http://localhost:8080/travelwear/shoppers/${uid}/cart`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(product)
+        });
+        
+        if (!res.ok) {
+          throw new Error('Failed to add to cart');
+        }
+        
+        const json = await res.json();
+    }
+
     return (
         <Fragment>
             <DialogContent dividers={true}>
@@ -89,10 +111,10 @@ const ApparelDialog = ({item}: {item: Product | undefined}) => {
                                 {size}
                             </Button>  
                         )}
-                        <Button variant='contained' disableElevation sx={{ width: '100%', fontWeight: 'bold', py: 2, color: 'white' }}>
+                        <Button onClick={() => updateCart(item)} variant='contained' disableElevation sx={{ width: '100%', fontWeight: 'bold', py: 2, color: 'white' }}>
                             Add To Cart
                         </Button>
-                        <Button component='a' href={`/product/${item?.id}`} variant='contained' disableElevation color='secondary' sx={{ width: '100%', fontWeight: 'bold', py: 2, color: 'white' }}>
+                        <Button onClick={() => router.push(`/product/${item?.id}`)} variant='contained' disableElevation color='secondary' sx={{ width: '100%', fontWeight: 'bold', py: 2, color: 'white' }}>
                             View Details
                         </Button>
                     </Grid>
